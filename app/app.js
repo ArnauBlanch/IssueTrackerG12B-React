@@ -81,6 +81,7 @@ const render = (messages) => {
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <Router
+          path=""
           history={history}
           routes={rootRoute}
           render={
