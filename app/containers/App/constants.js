@@ -10,3 +10,5 @@
  */
 
 export const DEFAULT_LOCALE = 'en';
+export const SET_UNAUTHENTICATED = 'app/SET_UNAUTHENTICATED';
+export const SET_AUTH_TOKEN = 'app/SET_AUTH_TOKEN';

@@ -15,6 +15,10 @@ const makeSelectLocationState = () => {
   };
 };
 
+const makeSelectAuth = () => (state) => state.get('auth').toJS();
+
+
 export {
   makeSelectLocationState,
+  makeSelectAuth,
 };

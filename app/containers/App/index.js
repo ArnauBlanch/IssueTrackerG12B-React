@@ -12,18 +12,54 @@
  */
 
 import React from 'react';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import AppHeader from '../../components/AppHeader';
+import { makeSelectAuth } from './selectors';
+import { setAuthToken, setUnauthenticated } from './actions';
 
-export default class App extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleAuthChange = this.handleAuthChange.bind(this);
+  }
 
-  static propTypes = {
-    children: React.PropTypes.node,
-  };
+  handleAuthChange(value) {
+    if (value === 'unauthenticated') {
+      this.props.dispatch(setUnauthenticated());
+    } else {
+      this.props.dispatch(setAuthToken(value));
+    }
+  }
 
   render() {
     return (
       <div>
+        <AppHeader
+          authUser={this.props.authState.authUser}
+          isAuthenticated={this.props.authState.isAuthenticated}
+          handleAuthChange={this.handleAuthChange}
+        />
         {React.Children.toArray(this.props.children)}
       </div>
     );
   }
 }
+App.propTypes = {
+  dispatch: React.PropTypes.func.isRequired,
+  children: React.PropTypes.node,
+  authState: React.PropTypes.object.isRequired,
+};
+
+const mapStateToProps = createStructuredSelector({
+  authState: makeSelectAuth(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

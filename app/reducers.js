@@ -7,7 +7,8 @@ import { combineReducers } from 'redux-immutable';
 import { fromJS } from 'immutable';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
-import languageProviderReducer from 'containers/LanguageProvider/reducer';
+import { SET_AUTH_TOKEN, SET_UNAUTHENTICATED } from './containers/App/constants';
+import languageProviderReducer from './containers/LanguageProvider/reducer';
 
 /*
  * routeReducer
@@ -37,6 +38,26 @@ function routeReducer(state = routeInitialState, action) {
   }
 }
 
+const authInitialState = fromJS({
+  authUser: localStorage.getItem('authToken'),
+  isAuthenticated: localStorage.getItem('authToken') !== null,
+});
+
+function authReducer(state = authInitialState, action) {
+  switch (action.type) {
+    case SET_UNAUTHENTICATED:
+      localStorage.removeItem('authToken');
+      return state.set('isAuthenticated', false)
+                  .set('authUser', undefined);
+    case SET_AUTH_TOKEN:
+      localStorage.setItem('authToken', action.token);
+      return state.set('isAuthenticated', true)
+                  .set('authUser', action.token);
+    default:
+      return state;
+  }
+}
+
 /**
  * Creates the main reducer with the asynchronously loaded ones
  */
@@ -44,6 +65,7 @@ export default function createReducer(asyncReducers) {
   return combineReducers({
     route: routeReducer,
     language: languageProviderReducer,
+    auth: authReducer,
     ...asyncReducers,
   });
 }
