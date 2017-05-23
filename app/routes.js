@@ -37,7 +37,7 @@ export default function createRoutes(store) {
 
         importModules.catch(errorLoading);
       },
-    }, {
+    }, /* {
       path: '/issues/new',
       name: 'newIssuePage',
       getComponent(nextState, cb) {
@@ -57,7 +57,7 @@ export default function createRoutes(store) {
 
         importModules.catch(errorLoading);
       },
-    }, {
+    }, */ {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {
