@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Chip, Dialog, FlatButton, RadioButtonGroup, RadioButton } from 'material-ui';
+import { AppBar, Chip, Dialog, RadioButtonGroup, RadioButton } from 'material-ui';
 import { blue200 } from 'material-ui/styles/colors';
 import ApiUsers from '../../utils/ApiUsers';
 
