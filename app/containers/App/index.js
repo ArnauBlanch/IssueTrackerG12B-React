@@ -40,7 +40,19 @@ class App extends React.Component {
           isAuthenticated={this.props.authState.isAuthenticated}
           handleAuthChange={this.handleAuthChange}
         />
-        {React.Children.toArray(this.props.children)}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            overflow: 'auto',
+            marginTop: 50,
+            maxHeight: '100vh',
+            minHeight: 'min-content',
+          }}
+        >
+          {React.Children.toArray(this.props.children)}
+        </div>
       </div>
     );
   }
