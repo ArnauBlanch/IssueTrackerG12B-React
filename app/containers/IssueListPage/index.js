@@ -16,10 +16,17 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import { getIssuesRequest } from './actions';
 import makeSelectIssueListPage from './selectors';
 
 export class IssueListPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  constructor(props) {
+    super(props);
+    this.props.dispatch(getIssuesRequest());
+  }
   render() {
+    const { issues } = this.props.issuesState;
+    console.log(issues);
     return (
       <div>
         <Helmet
@@ -41,7 +48,26 @@ export class IssueListPage extends React.Component { // eslint-disable-line reac
               <TableHeaderColumn>Updated</TableHeaderColumn>
             </TableRow>
           </TableHeader>
-          <TableBody displayRowCheckbox={false}></TableBody>
+          <TableBody displayRowCheckbox={false}>
+            {
+              issues && issues.map((issue) => (
+                <TableRow>
+                  <TableRowColumn>{`#${issue.id}: ${issue.title}`}</TableRowColumn>
+                  <TableRowColumn>{`${issue.kind}`}</TableRowColumn>
+                  <TableRowColumn>{`${issue.priority}`}</TableRowColumn>
+                  <TableRowColumn>{`${issue.status}`}</TableRowColumn>
+                  <TableRowColumn>
+                    { issue.votes > 0 && issue.votes }
+                  </TableRowColumn>
+                  <TableRowColumn>
+                    { issue._links.assignee && issue._links.assignee.name }
+                  </TableRowColumn>
+                  <TableRowColumn>{`${issue.created_at}`}</TableRowColumn>
+                  <TableRowColumn>{`${issue.updated_at}`}</TableRowColumn>
+                </TableRow>
+              ))
+            }
+          </TableBody>
         </Table>
       </div>
     );
@@ -50,10 +76,11 @@ export class IssueListPage extends React.Component { // eslint-disable-line reac
 
 IssueListPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  issuesState: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  IssueListPage: makeSelectIssueListPage(),
+  issuesState: makeSelectIssueListPage(),
 });
 
 function mapDispatchToProps(dispatch) {
