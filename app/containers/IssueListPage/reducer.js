@@ -6,15 +6,25 @@
 
 import { fromJS } from 'immutable';
 import {
-  DEFAULT_ACTION,
+  GET_ISSUES_SUCCESS,
+  GET_ISSUES_FAILURE,
+  CURRENTLY_SENDING,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = fromJS({
+  issues: undefined,
+  error: false,
+  currentlySending: false,
+});
 
 function issueListPageReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case GET_ISSUES_SUCCESS:
+      return state.set('issues', fromJS(action.issues)).set('error', false);
+    case GET_ISSUES_FAILURE:
+      return state.set('error', true);
+    case CURRENTLY_SENDING:
+      return state.set('currentlySending', true);
     default:
       return state;
   }
