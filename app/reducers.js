@@ -39,18 +39,18 @@ function routeReducer(state = routeInitialState, action) {
 }
 
 const authInitialState = fromJS({
-  authUser: localStorage.getItem('authToken'),
-  isAuthenticated: localStorage.getItem('authToken') !== null,
+  authUser: localStorage.getItem('authUser'),
+  isAuthenticated: localStorage.getItem('authUser') !== null,
 });
 
 function authReducer(state = authInitialState, action) {
   switch (action.type) {
     case SET_UNAUTHENTICATED:
-      localStorage.removeItem('authToken');
+      localStorage.removeItem('authUser');
       return state.set('isAuthenticated', false)
                   .set('authUser', undefined);
     case SET_AUTH_TOKEN:
-      localStorage.setItem('authToken', action.token);
+      localStorage.setItem('authUser', action.token);
       return state.set('isAuthenticated', true)
                   .set('authUser', action.token);
     default:
