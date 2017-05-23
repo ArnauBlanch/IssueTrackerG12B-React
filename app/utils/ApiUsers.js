@@ -1,14 +1,14 @@
 export default [
   {
     username: 'username1',
-    authToken: 'authToken1',
+    apiKey: 'authToken1',
   },
   {
     username: 'username2',
-    authToken: 'authToken2',
+    apiKey: 'authToken2',
   },
   {
     username: 'username3',
-    authToken: 'authToken3',
+    apiKey: 'authToken3',
   },
 ];
