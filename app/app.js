@@ -17,7 +17,6 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { useScroll } from 'react-router-scroll';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { MuiThemeProvider } from 'material-ui/styles';
-import theme from './muiTheme';
 import 'sanitize.css/sanitize.css';
 
 // Import root app
@@ -46,6 +45,8 @@ import './global-styles';
 
 // Import root routes
 import createRoutes from './routes';
+
+import theme from './muiTheme';
 
 // Create redux store with history
 // this uses the singleton browserHistory provided by react-router

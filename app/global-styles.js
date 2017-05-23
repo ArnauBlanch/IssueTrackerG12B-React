@@ -4,27 +4,11 @@ import { injectGlobal } from 'styled-components';
 injectGlobal`
   html,
   body {
-    height: 100%;
-    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
   }
-
-  body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  }
-
-  body.fontLoaded {
-    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  }
-
-  #app {
-    background-color: #fafafa;
-    min-height: 100%;
-    min-width: 100%;
-  }
-
-  p,
-  label {
-    font-family: Georgia, Times, 'Times New Roman', serif;
-    line-height: 1.5em;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
   }
 `;
