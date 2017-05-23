@@ -7,6 +7,7 @@ const theme = getMuiTheme({
     primary2Color: blue900,
     primary3Color: blue900,
   },
+  fontFamily: 'Lato',
 });
 
 export default theme;
