@@ -6,7 +6,7 @@ import { getUsersSuccess, createIssueSuccess, createIssueFailure } from './actio
 
 
 export function* getUsers() {
-  while (true) {
+  while (true) { // eslint-disable-line
     yield take(GET_USERS_REQUEST);
     const response = yield call(request, '/users', 'GET', undefined, true);
     if (response.status === 200 || response.status === 304) {
@@ -17,15 +17,13 @@ export function* getUsers() {
 }
 
 export function* createIssue() {
-  while (true) {
+  while (true) { // eslint-disable-line
     const { issue } = yield take(CREATE_ISSUE_REQUEST);
-    debugger;
     const response = yield call(request, '/issues', 'POST', issue, true);
     if (response.status === 201) {
       const responseBody = yield response.json();
-      debugger;
       yield put(createIssueSuccess());
-      yield put(push(`/issues/${responseBody.id}`))
+      yield put(push(`/issues/${responseBody.id}`));
     } else {
       yield put(createIssueFailure(response.status));
     }
