@@ -36,20 +36,24 @@ export class IssueListPage extends React.Component { // eslint-disable-line reac
 
   render() {
     const { issues } = this.props.issuesState;
-    const titleWidth = { maxWidth: '180px' };
-    const columnIconWidth = { width: '16px' };
-    const statusWidth = { width: '128px' };
-    const votesWidth = { width: '72px' };
-    const assigneeWidth = { width: '250px' };
-    const dateWidth = { width: '140px' };
+    const titleWidth = { paddingLeft: 20, paddingRight: 0 };
+    const columnIconWidth = { width: 50, textAlign: 'center', paddingLeft: 0, paddingRight: 0 };
+    const statusWidth = { width: 80, textAlign: 'center', paddingLeft: 0, paddingRight: 0 };
+    const votesWidth = { width: 50, textAlign: 'center', paddingLeft: 0, paddingRight: 0 };
+    const assigneeWidth = { width: 230, textAlign: 'center', overflow: 'ellipsis' };
+    const dateWidth = { width: 100, textAlign: 'center', paddingLeft: 0, paddingRight: 0 };
     const cardStyle = {
-      margin: '75px 100px',
-    }
+      margin: 10,
+      maxWidth: 1000,
+      paddingLeft: 10,
+      paddingRight: 10,
+      marginBottom: 55,
+    };
     const milisecInDay = 86400000;
     const now = new Date();
 
     return (
-      <div>
+      <div className="">
         <Helmet
           title="Issue Tracker"
           meta={[
@@ -58,23 +62,23 @@ export class IssueListPage extends React.Component { // eslint-disable-line reac
         />
         <Card style={cardStyle}>
           <Table>
-            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+            <TableHeader displaySelectAll={false} adjustForCheckbox={false} style={{ paddingRight: 20 }}>
               <TableRow>
-                <TableHeaderColumn style={titleWidth}>Title</TableHeaderColumn>
-                <TableHeaderColumn style={columnIconWidth}>T</TableHeaderColumn>
-                <TableHeaderColumn style={columnIconWidth}>P</TableHeaderColumn>
-                <TableHeaderColumn style={statusWidth}>S</TableHeaderColumn>
-                <TableHeaderColumn style={votesWidth}>Votes</TableHeaderColumn>
-                <TableHeaderColumn style={assigneeWidth}>Assignee</TableHeaderColumn>
-                <TableHeaderColumn style={dateWidth}>Created</TableHeaderColumn>
-                <TableHeaderColumn style={dateWidth}>Updated</TableHeaderColumn>
+                <TableHeaderColumn className="mdl-cell--6-col" style={titleWidth}>Title</TableHeaderColumn>
+                <TableHeaderColumn style={columnIconWidth}>Kind</TableHeaderColumn>
+                <TableHeaderColumn style={columnIconWidth}>Priority</TableHeaderColumn>
+                <TableHeaderColumn style={statusWidth}>Status</TableHeaderColumn>
+                <TableHeaderColumn className="mdl-cell--hide-phone" style={votesWidth}>Votes</TableHeaderColumn>
+                <TableHeaderColumn className="mdl-cell--hide-phone mdl-cell--hide-tablet" style={assigneeWidth}>Assignee</TableHeaderColumn>
+                <TableHeaderColumn className="mdl-cell--hide-phone" style={dateWidth}>Created</TableHeaderColumn>
+                <TableHeaderColumn className="mdl-cell--hide-tablet mdl-cell--hide-phone" style={dateWidth}>Updated</TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false} showRowHover>
               {
                 issues && issues.map((issue) => (
                   <TableRow selectable={false}>
-                    <TableRowColumn style={titleWidth}>
+                    <TableRowColumn className="mdl-cell--6-col" style={titleWidth}>
                       <Link to={`/issues/${issue.id}`} style={{ textDecoration: 'none' }}>
                         {`#${issue.id}: ${issue.title}`}
                       </Link>
@@ -82,10 +86,10 @@ export class IssueListPage extends React.Component { // eslint-disable-line reac
                     <TableRowColumn style={columnIconWidth}><KindIcon kind={issue.kind} /></TableRowColumn>
                     <TableRowColumn style={columnIconWidth}><PriorityIcon priority={issue.priority} /></TableRowColumn>
                     <TableRowColumn style={statusWidth}><StatusLabel status={issue.status} /></TableRowColumn>
-                    <TableRowColumn style={votesWidth}>
+                    <TableRowColumn className="mdl-cell--hide-phone" style={votesWidth}>
                       { issue.votes > 0 && <BadgeNumber number={issue.votes} voted={issue.voted_by_auth_user} /> }
                     </TableRowColumn>
-                    <TableRowColumn style={assigneeWidth}>
+                    <TableRowColumn style={assigneeWidth} className="mdl-cell--hide-phone mdl-cell--hide-tablet">
                       { issue._links.assignee &&
                         <UserAvatar
                           name={issue._links.assignee.name}
@@ -93,18 +97,18 @@ export class IssueListPage extends React.Component { // eslint-disable-line reac
                         />
                       }
                     </TableRowColumn>
-                    <TableRowColumn style={dateWidth}>
+                    <TableRowColumn className="mdl-cell--hide-phone" style={dateWidth}>
                       {
                         now.getTime() - (new Date(issue.created_at)).getTime() <= milisecInDay * 2 ?
-                          <FormattedRelative value={issue.created_at} /> :
-                          <FormattedDate value={issue.created_at} />
+                          <FormattedRelative value={issue.created_at} />
+                        : <FormattedDate value={issue.created_at} />
                       }
                     </TableRowColumn>
-                    <TableRowColumn style={dateWidth}>
+                    <TableRowColumn className="mdl-cell--hide-phone mdl-cell--hide-tablet" style={dateWidth}>
                       {
                         now.getTime() - (new Date(issue.updated_at)).getTime() <= milisecInDay * 2 ?
-                          <FormattedRelative value={issue.updated_at} /> :
-                          <FormattedDate value={issue.updated_at} />
+                          <FormattedRelative value={issue.updated_at} />
+                        : <FormattedDate value={issue.updated_at} />
                       }
                     </TableRowColumn>
                   </TableRow>
@@ -115,7 +119,7 @@ export class IssueListPage extends React.Component { // eslint-disable-line reac
         </Card>
 
         <FloatingActionButton
-          style={{ right: 30, bottom: 30, position: 'fixed' }}
+          style={{ right: 20, bottom: 20, position: 'fixed' }}
           onTouchTap={() => this.props.dispatch(push('/issues/new'))}
         >
           <ContentAdd />

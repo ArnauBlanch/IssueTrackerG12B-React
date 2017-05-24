@@ -29,7 +29,7 @@ class AppHeader extends React.Component { // eslint-disable-line
               <b>{ this.props.isAuthenticated ? ApiUsers[this.props.authUser].username : 'Unauthenticated' }</b>
             </Chip>
           }
-          style={{ position: 'fixed' }}
+          style={{ position: 'fixed', top: 0 }}
         />
         <div>
           <Dialog
