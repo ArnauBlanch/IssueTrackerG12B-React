@@ -11,7 +11,7 @@ const prepareUser = (u) => (
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
     }
     &nbsp;&nbsp;&nbsp;
-    <i>{u.nickname}</i>
+    {u.nickname}
   </span>
 );
 
@@ -39,8 +39,8 @@ class AppHeader extends React.Component { // eslint-disable-line
               labelStyle={{ color: '#fff', fontSize: 14 }}
               onChange={(e, value) => this.props.handleAuthChange(value - 1)}
             >
-              <MenuItem key={0} value={0} primaryText="Unauthenticated" style={{ textAlign: 'center' }} />
-              { ApiUsers.map((u, index) => <MenuItem key={index + 1} value={index + 1} primaryText={prepareUser(u)} style={{ textAlign: 'center' }} />) }
+              <MenuItem key={0} value={0} primaryText={<i>Unauthenticated</i>} />
+              { ApiUsers.map((u, index) => <MenuItem key={index + 1} value={index + 1} primaryText={prepareUser(u)} />) }
             </SelectField>
           }
           style={{ position: 'fixed', top: 0 }}

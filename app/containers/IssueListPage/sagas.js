@@ -6,7 +6,6 @@ import { getIssuesSuccess, getIssuesFailure, currentlySending } from './actions'
 export function* getIssues() {
   while (true) {
     yield take(GET_ISSUES_REQUEST);
-    console.log('request');
     yield put(currentlySending(true));
     const response = yield call(request, '/issues', 'GET', undefined, false);
     if (response.status === 200) {

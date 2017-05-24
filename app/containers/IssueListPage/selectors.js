@@ -13,6 +13,7 @@ const selectIssueListPageDomain = () => (state) => state.get('issueListPage');
 /**
  * Default selector used by IssueListPage
  */
+const makeSelectAuthState = () => (state) => state.get('auth').toJS();
 
 const makeSelectIssueListPage = () => createSelector(
   selectIssueListPageDomain(),
@@ -22,4 +23,5 @@ const makeSelectIssueListPage = () => createSelector(
 export default makeSelectIssueListPage;
 export {
   selectIssueListPageDomain,
+  makeSelectAuthState,
 };

@@ -20,11 +20,12 @@ const initialState = fromJS({
 function issueListPageReducer(state = initialState, action) {
   switch (action.type) {
     case GET_ISSUES_SUCCESS:
+      console.log('success');
       return state.set('issues', fromJS(action.issues)).set('error', false);
     case GET_ISSUES_FAILURE:
       return state.set('error', true);
     case CURRENTLY_SENDING:
-      return state.set('currentlySending', true);
+      return state.set('currentlySending', action.sending);
     default:
       return state;
   }
