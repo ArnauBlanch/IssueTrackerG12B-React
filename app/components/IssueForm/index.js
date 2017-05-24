@@ -10,11 +10,14 @@ import { TextField, SelectField } from 'redux-form-material-ui';
 import { MenuItem, RaisedButton, FlatButton } from 'material-ui';
 import Wysiwyg from './Wysiwyg';
 import DropzoneInput from './DropzoneInput';
-import { kinds, priorities, users } from './kinds-priorities';
+import { kinds, priorities } from './kinds-priorities';
 
 const prepareUser = (u) => (
   <span>
-    <img alt={u.name} src={u._links.image.href} height="16px" />
+    { u._links && u._links.image ?
+      <img alt={u.name} src={u._links.image.href} height="16px" /> :
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    }
     &nbsp;&nbsp;&nbsp;
     <b>{u.name}</b>
     &nbsp;&nbsp;
@@ -25,22 +28,12 @@ const prepareUser = (u) => (
 class IssueForm extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
-    this.state = { files: [], fileChanged: false };
+    this.state = { files: [] };
     this.filesChanged = this.filesChanged.bind(this);
-    this.deleteFile = this.deleteFile.bind(this);
   }
 
   filesChanged(e) {
     this.setState({ files: e.files });
-  }
-
-  deleteFile(f) {
-    const files = this.state.files;
-    debugger;
-    files.splice(files.indexOf(f), 1);
-    debugger;
-    this.setState({ files });
-    debugger;
   }
 
   required(value) {
@@ -74,12 +67,14 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
           floatingLabelText="Assignee"
           style={{ width: '100%' }}
         >
-          { users.map((u) => <MenuItem key={u.id} value={u.id} primaryText={prepareUser(u)} />) }
+          <MenuItem value="" />
+          { this.props.users.map((u) => <MenuItem key={u.id} value={u.id} primaryText={prepareUser(u)} />) }
         </Field><br />
         <div style={{ textAlign: 'center' }}>
           <FlatButton
             label="Assign to me"
-            labelStyle={{ fontWeight: 'bold' }}
+            labelStyle={{ fontSize: '12px', fontWeight: 'bold' }}
+            style={{ marginTop: -5 }}
             onTouchTap={() => this.props.dispatch(change('issueForm', 'assignee', this.props.authUser))}
           />
         </div>
@@ -109,7 +104,13 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
           onFocus={this.fileChanged}
         /><br />
         <br />
-        <div style={{ textAlign: 'center' }}><RaisedButton label="Create issue" primary /></div>
+        <div style={{ textAlign: 'center' }}>
+          <RaisedButton
+            label="Create issue"
+            type="submit"
+            primary
+          />
+        </div>
       </form>
     );
   }
@@ -119,6 +120,7 @@ IssueForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   authUser: PropTypes.number.isRequired,
+  users: PropTypes.array.isRequired,
 };
 
 export default reduxForm({

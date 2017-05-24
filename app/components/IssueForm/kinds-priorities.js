@@ -54,26 +54,3 @@ export const priorities = [
     icon: textIcon('Blocker', blockerIcon),
   },
 ];
-
-export const users = [
-  {
-    id: 1,
-    name: 'Arnau Blanch Cortès',
-    nickname: 'ArnauBlanch',
-    _links: {
-      image: {
-        href: 'https://www.fillmurray.com/30/30',
-      },
-    },
-  },
-  {
-    id: 2,
-    name: 'Iván de Mingo Guerrero',
-    nickname: 'deMingo7',
-    _links: {
-      image: {
-        href: 'https://www.fillmurray.com/20/20',
-      },
-    },
-  },
-];

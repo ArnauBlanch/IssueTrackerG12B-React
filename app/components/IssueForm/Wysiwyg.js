@@ -4,7 +4,6 @@ class Wysiwyg extends Component {
 
   static propTypes = {
     onBlur: PropTypes.func,
-    onChange: PropTypes.func.isRequired,
     input: PropTypes.object,
   }
 
@@ -40,14 +39,14 @@ class Wysiwyg extends Component {
       typingTimeout: setTimeout(() => {
         const isEmpty = !value.getEditorState().getCurrentContent().hasText();
         const val = isEmpty ? '' : value.toString('html');
-        this.props.onChange(val);
+        this.props.input.onChange(val);
       }, 250),
     });
   }
 
   render() {
     const { value } = this.state;
-    const { onBlur } = this.props;
+    const { onBlur } = this.props.input;
     const toolbarConfig = {
       // Optionally specify the groups to display (displayed in the order listed).
       display: ['INLINE_STYLE_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'LINK_BUTTONS', 'HISTORY_BUTTONS'],

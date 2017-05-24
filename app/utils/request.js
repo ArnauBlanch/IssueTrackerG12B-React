@@ -14,8 +14,8 @@ export default function request(endpoint, method, body, withAuth) {
     Accept: 'application/json',
   };
   if (body) headers['Content-Type'] = 'application/json';
-  if (localStorage.getItem('auth_user') !== null) {
-    headers['X-API-Key'] = ApiUsers[localStorage.getItem('auth_user')].apiKey;
+  if (localStorage.getItem('authUser') !== null) {
+    headers['X-API-Key'] = ApiUsers[localStorage.getItem('authUser')].apiKey;
   } else if (withAuth) {
     throw new Error('Missing authentication');
   }
