@@ -14,12 +14,15 @@ const selectNewIssuePageDomain = () => (state) => state.get('newIssuePage');
  * Default selector used by NewIssuePage
  */
 
+ const makeSelectAuthUser = () => (state) => state.get('auth').get('authUser');
+
 const makeSelectNewIssuePage = () => createSelector(
   selectNewIssuePageDomain(),
   (substate) => substate.toJS()
 );
 
-export default makeSelectNewIssuePage;
 export {
+  makeSelectNewIssuePage,
   selectNewIssuePageDomain,
+  makeSelectAuthUser,
 };
