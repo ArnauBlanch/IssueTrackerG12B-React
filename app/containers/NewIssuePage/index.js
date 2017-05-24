@@ -72,9 +72,10 @@ export class NewIssuePage extends React.Component { // eslint-disable-line react
         <h3 style={{ textAlign: 'center' }}>Create issue</h3>
         <IssueForm
           dispatch={this.props.dispatch}
-          authUser={parseInt(this.props.authUser)}
+          authUser={parseInt(this.props.authUser, 10)}
           onSubmit={this.handleSubmit}
           users={this.props.NewIssuePage.users}
+          initialValues={{ kind: 'bug', priority: 'major' }}
         />
       </div>
     );
@@ -83,6 +84,8 @@ export class NewIssuePage extends React.Component { // eslint-disable-line react
 
 NewIssuePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  NewIssuePage: PropTypes.object.isRequired,
+  authUser: PropTypes.number,
 };
 
 const mapStateToProps = createStructuredSelector({

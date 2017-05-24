@@ -20,7 +20,6 @@ const initialState = fromJS({
 function issueListPageReducer(state = initialState, action) {
   switch (action.type) {
     case GET_ISSUES_SUCCESS:
-      console.log('success');
       return state.set('issues', fromJS(action.issues)).set('error', false);
     case GET_ISSUES_FAILURE:
       return state.set('error', true);
