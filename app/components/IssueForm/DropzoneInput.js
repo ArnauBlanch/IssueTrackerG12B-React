@@ -9,12 +9,12 @@ class DropzoneInput extends React.Component {
         <Dropzone
           name={this.props.input.name}
           onDrop={(filesToUpload) => this.props.input.onChange({ files: filesToUpload })}
-          maxSize={1000000}
+          maxSize={5000000}
           multiple={true}
           style={{
             border: '3px dotted #ccc',
             borderRadius: '20px',
-            height: 65,
+            height: 85,
             position: 'relative',
             width: '80%',
             display: 'block',
@@ -27,6 +27,8 @@ class DropzoneInput extends React.Component {
           rejectStyle={{ borderColor: 'red' }}
         >
           <br />Drop a file or click to select one<br />
+          <i>Maximum size:  5 MB</i>
+          <br />
         </Dropzone>
         { this.props.input.value.files &&
           <div>
