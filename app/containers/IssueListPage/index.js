@@ -36,7 +36,7 @@ export class IssueListPage extends React.Component { // eslint-disable-line reac
 
   render() {
     const { issues } = this.props.issuesState;
-    const titleWidth = { paddingLeft: 20, paddingRight: 0 };
+    const titleWidth = { paddingLeft: 5, paddingRight: 0 };
     const columnIconWidth = { width: 50, textAlign: 'center', paddingLeft: 0, paddingRight: 0 };
     const statusWidth = { width: 80, textAlign: 'center', paddingLeft: 0, paddingRight: 0 };
     const votesWidth = { width: 50, textAlign: 'center', paddingLeft: 0, paddingRight: 0 };
