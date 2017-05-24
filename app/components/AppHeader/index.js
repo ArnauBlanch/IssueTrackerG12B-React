@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { AppBar, Chip, Dialog, RadioButtonGroup, RadioButton } from 'material-ui';
 import { blue200 } from 'material-ui/styles/colors';
 import ApiUsers from '../../utils/ApiUsers';
@@ -18,7 +19,7 @@ class AppHeader extends React.Component { // eslint-disable-line
     return (
       <div>
         <AppBar
-          title="Issue Tracker"
+          title={<Link to="/" style={{ textDecoration: 'none', color: '#fff' }}>Issue Tracker</Link>}
           showMenuIconButton={false}
           iconElementRight={
             <Chip
@@ -28,6 +29,7 @@ class AppHeader extends React.Component { // eslint-disable-line
               <b>{ this.props.isAuthenticated ? ApiUsers[this.props.authUser].username : 'Unauthenticated' }</b>
             </Chip>
           }
+          style={{ position: 'fixed' }}
         />
         <div>
           <Dialog
@@ -36,6 +38,7 @@ class AppHeader extends React.Component { // eslint-disable-line
             onRequestClose={this.toggleDialog}
           >
             <RadioButtonGroup
+              name="user"
               defaultSelected={this.props.isAuthenticated ? parseInt(this.props.authUser) : 'unauthenticated'} // eslint-disable-line
               onChange={(e, value) => {
                 this.props.handleAuthChange(value);
@@ -48,6 +51,7 @@ class AppHeader extends React.Component { // eslint-disable-line
               />
               { ApiUsers.map((elem, index) => (
                 <RadioButton
+                  key={index}
                   value={index}
                   label={elem.username}
                 />
@@ -60,7 +64,7 @@ class AppHeader extends React.Component { // eslint-disable-line
   }
 }
 AppHeader.propTypes = {
-  authUser: React.PropTypes.string.isRequired,
+  authUser: React.PropTypes.number,
   isAuthenticated: React.PropTypes.bool.isRequired,
   handleAuthChange: React.PropTypes.func.isRequired,
 };

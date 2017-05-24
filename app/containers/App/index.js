@@ -36,17 +36,16 @@ class App extends React.Component {
     return (
       <div>
         <AppHeader
-          authUser={this.props.authState.authUser}
+          authUser={parseInt(this.props.authState.authUser)}
           isAuthenticated={this.props.authState.isAuthenticated}
           handleAuthChange={this.handleAuthChange}
         />
         <div
+          className="mdl-grid"
           style={{
-            display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
-            overflow: 'auto',
-            marginTop: 50,
+            padding: 20,
+            paddingTop: 64,
             maxHeight: '100vh',
             minHeight: 'min-content',
           }}
