@@ -12,10 +12,6 @@ import { makeSelectNewIssuePage, makeSelectAuthUser } from './selectors';
 import IssueForm from '../../components/IssueForm';
 import { getUsersRequest, createIssueRequest } from './actions';
 
-function capitalize(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
 export class NewIssuePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -29,9 +25,7 @@ export class NewIssuePage extends React.Component { // eslint-disable-line react
 
   handleSubmit(values) {
     if (values.get('attachments')) {
-      console.log('attachments if');
-      values.get('attachments').files.map((a) => {
-        console.log(a);
+      values.get('attachments').files.forEach((a) => {
         const reader = new FileReader();
         reader.readAsDataURL(a);
         reader.onload = () => {
@@ -42,7 +36,7 @@ export class NewIssuePage extends React.Component { // eslint-disable-line react
           });
           this.setState({ attachments });
           this.sendIssue(values);
-        }
+        };
         // reader.onError = () => this.setState({ imageError: true });
       });
     } else {
@@ -51,7 +45,7 @@ export class NewIssuePage extends React.Component { // eslint-disable-line react
   }
 
   sendIssue(values) {
-    if (values.get('attachments') && this.state.attachments.length === values.get('attachments').files.length
+    if ((values.get('attachments') && this.state.attachments.length === values.get('attachments').files.length)
       || typeof values.get('attachments') === 'undefined') {
       const newIssue = {
         title: values.get('title'),

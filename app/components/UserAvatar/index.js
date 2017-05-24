@@ -7,18 +7,17 @@
 import React from 'react';
 import { Chip, Avatar } from 'material-ui';
 
-const styles = {
-  chip: {
-    margin: 4,
-  },
-};
-
 function UserAvatar(props) {
   return (
-    <Chip style={styles.chip}>
-      { props.imageUrl && <Avatar src={props.imageUrl} /> }
-      {props.name}
-    </Chip>
+    <div style={{ width: 'min-content', maxWidth: '100%', margin: 'auto' }}>
+      <Chip
+        style={{ margin: 'auto', maxWidth: '100%', overflow: 'hidden', width: 'available' }}
+        labelStyle={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
+      >
+        { props.imageUrl && <Avatar src={props.imageUrl} /> }
+        {props.name}
+      </Chip>
+    </div>
   );
 }
 

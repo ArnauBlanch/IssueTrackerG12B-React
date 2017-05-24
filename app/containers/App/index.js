@@ -44,8 +44,8 @@ class App extends React.Component {
           className="mdl-grid"
           style={{
             justifyContent: 'center',
-            padding: 20,
-            paddingTop: 64,
+            // margin: 0,
+            marginTop: 64,
             maxHeight: '100vh',
             minHeight: 'min-content',
           }}
