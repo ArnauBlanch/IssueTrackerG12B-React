@@ -25,7 +25,7 @@ class App extends React.Component {
   }
 
   handleAuthChange(value) {
-    if (value === 'unauthenticated') {
+    if (value === -1) {
       this.props.dispatch(setUnauthenticated());
     } else {
       this.props.dispatch(setAuthToken(value));
@@ -44,7 +44,6 @@ class App extends React.Component {
           className="mdl-grid"
           style={{
             justifyContent: 'center',
-            // margin: 0,
             marginTop: 64,
             maxHeight: '100vh',
             minHeight: 'min-content',
