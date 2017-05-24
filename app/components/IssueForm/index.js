@@ -8,6 +8,7 @@ import React, { PropTypes } from 'react';
 import { reduxForm, Field, change } from 'redux-form/immutable';
 import { TextField, SelectField } from 'redux-form-material-ui';
 import { MenuItem, RaisedButton, FlatButton } from 'material-ui';
+import { blue900 } from 'material-ui/styles/colors';
 import Wysiwyg from './Wysiwyg';
 import DropzoneInput from './DropzoneInput';
 import { kinds, priorities } from './kinds-priorities';
@@ -66,6 +67,7 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
           component={SelectField}
           floatingLabelText="Assignee"
           style={{ width: '100%' }}
+          selectedMenuItemStyle={{ color: blue900 }}
         >
           <MenuItem value="" />
           { this.props.users.map((u) => <MenuItem key={u.id} value={u.id} primaryText={prepareUser(u)} />) }
@@ -75,7 +77,7 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
             label="Assign to me"
             labelStyle={{ fontSize: '12px', fontWeight: 'bold' }}
             style={{ marginTop: -5 }}
-            onTouchTap={() => this.props.dispatch(change('issueForm', 'assignee', this.props.authUser))}
+            onTouchTap={() => this.props.dispatch(change('issueForm', 'assignee', this.props.authUser + 1))}
           />
         </div>
         <Field
@@ -83,6 +85,7 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
           component={SelectField}
           floatingLabelText="Kind"
           style={{ width: '100%' }}
+          selectedMenuItemStyle={{ color: blue900 }}
         >
           { kinds.map((k) => <MenuItem key={k.name} value={k.name} primaryText={k.icon} />) }
         </Field><br />
@@ -91,6 +94,7 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
           component={SelectField}
           floatingLabelText="Priority"
           style={{ width: '100%' }}
+          selectedMenuItemStyle={{ color: blue900 }}
         >
           { priorities.map((p) => <MenuItem key={p.name} value={p.name} primaryText={p.icon} />) }
         </Field><br />

@@ -1,13 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { AppBar, Chip, Dialog, RadioButtonGroup, RadioButton } from 'material-ui';
-import { blue200 } from 'material-ui/styles/colors';
+import { AppBar, SelectField, MenuItem } from 'material-ui';
+import { blue900 } from 'material-ui/styles/colors';
 import ApiUsers from '../../utils/ApiUsers';
+
+const prepareUser = (u) => (
+  <span>
+    { u._links && u._links.image ?
+      <img alt={u.name} src={u._links.image.href} height="16px" /> :
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    }
+    &nbsp;&nbsp;&nbsp;
+    <i>{u.nickname}</i>
+  </span>
+);
 
 class AppHeader extends React.Component { // eslint-disable-line
   constructor(props) {
     super(props);
-    this.state = { dialogOpen: false };
     this.toggleDialog = this.toggleDialog.bind(this);
   }
 
@@ -22,43 +32,19 @@ class AppHeader extends React.Component { // eslint-disable-line
           title={<Link to="/" style={{ textDecoration: 'none', color: '#fff' }}>Issue Tracker</Link>}
           showMenuIconButton={false}
           iconElementRight={
-            <Chip
-              style={{ top: 8, marginRight: 10, backgroundColor: blue200 }}
-              onTouchTap={this.toggleDialog}
+            <SelectField
+              value={this.props.isAuthenticated ? this.props.authUser + 1 : 0}
+              style={{ width: 160, top: 0, right: 10, verticalAlign: 'middle' }}
+              selectedMenuItemStyle={{ color: blue900 }}
+              labelStyle={{ color: '#fff', fontSize: 14 }}
+              onChange={(e, value) => this.props.handleAuthChange(value - 1)}
             >
-              <b>{ this.props.isAuthenticated ? ApiUsers[this.props.authUser].username : 'Unauthenticated' }</b>
-            </Chip>
+              <MenuItem key={0} value={0} primaryText="Unauthenticated" style={{ textAlign: 'center' }} />
+              { ApiUsers.map((u, index) => <MenuItem key={index + 1} value={index + 1} primaryText={prepareUser(u)} style={{ textAlign: 'center' }} />) }
+            </SelectField>
           }
-          style={{ position: 'fixed' }}
+          style={{ position: 'fixed', top: 0 }}
         />
-        <div>
-          <Dialog
-            title="Choose a user"
-            open={this.state.dialogOpen}
-            onRequestClose={this.toggleDialog}
-          >
-            <RadioButtonGroup
-              name="user"
-              defaultSelected={this.props.isAuthenticated ? parseInt(this.props.authUser) : 'unauthenticated'} // eslint-disable-line
-              onChange={(e, value) => {
-                this.props.handleAuthChange(value);
-                this.toggleDialog();
-              }}
-            >
-              <RadioButton
-                value="unauthenticated"
-                label="(no authentication)"
-              />
-              { ApiUsers.map((elem, index) => (
-                <RadioButton
-                  key={index}
-                  value={index}
-                  label={elem.username}
-                />
-              )) }
-            </RadioButtonGroup>
-          </Dialog>
-        </div>
       </div>
     );
   }
