@@ -44,7 +44,7 @@ export class IssueListPage extends React.Component { // eslint-disable-line reac
     const dateWidth = { width: '140px' };
     const cardStyle = {
       margin: '75px 100px',
-    }
+    };
     const milisecInDay = 86400000;
     const now = new Date();
 
