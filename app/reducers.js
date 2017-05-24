@@ -40,7 +40,7 @@ function routeReducer(state = routeInitialState, action) {
 }
 
 const authInitialState = fromJS({
-  authUser: localStorage.getItem('authUser'),
+  authUser: parseInt(localStorage.getItem('authUser'), 10),
   isAuthenticated: localStorage.getItem('authUser') !== null,
 });
 

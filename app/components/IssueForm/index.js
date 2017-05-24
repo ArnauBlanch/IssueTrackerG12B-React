@@ -9,6 +9,7 @@ import { reduxForm, Field, change } from 'redux-form/immutable';
 import { TextField, SelectField } from 'redux-form-material-ui';
 import { MenuItem, RaisedButton, FlatButton } from 'material-ui';
 import { blue900 } from 'material-ui/styles/colors';
+import { goBack } from 'react-router-redux';
 import Wysiwyg from './Wysiwyg';
 import DropzoneInput from './DropzoneInput';
 import { kinds, priorities } from './kinds-priorities';
@@ -29,8 +30,13 @@ const prepareUser = (u) => (
 class IssueForm extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
+    console.log(this.props.initialValues);
     this.state = { files: [] };
     this.filesChanged = this.filesChanged.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.initialize(this.props.initialValues);
   }
 
   filesChanged(e) {
@@ -42,6 +48,10 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
   }
 
   render() {
+    let creator = this.props.initialValues.get('creator');
+    if (creator) {
+      creator = creator.toJS();
+    }
     return (
       <form
         onSubmit={this.props.handleSubmit}
@@ -62,6 +72,25 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
           floatingLabelText="Description"
           style={{ width: '100%' }}
         />
+        {
+          this.props.editing && creator &&
+            <div style={{ fontSize: 16 }}>
+              <div style={{ fontSize: 12, color: 'rgba(0, 0, 0, 0.3)', paddingTop: 10, marginBottom: 5 }}>
+                Creator
+              </div>
+              <span>
+                { creator.image &&
+                  <img
+                    alt={creator.name}
+                    src={creator.image.href}
+                    height="16px"
+                  />
+                }
+                &nbsp;&nbsp;&nbsp;<b>{creator.name}</b>&nbsp;&nbsp;
+                <i style={{ color: '#888', fontWeight: 300, fontSize: 15 }}>{creator.nickname}</i>
+              </span>
+            </div>
+        }
         <Field
           name="assignee"
           component={SelectField}
@@ -106,13 +135,34 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
           component={DropzoneInput}
           onChange={this.filesChanged}
           onFocus={this.fileChanged}
-        /><br />
-        <br />
+          currentFiles={this.props.initialValues.get('attachments').toJS()}
+        />
+        {
+          this.props.editing &&
+            <div>
+              <div style={{ fontSize: '12px', color: 'rgba(0, 0, 0, 0.3)', paddingTop: 10 }}>
+                Comment
+              </div>
+              <Field
+                name="comment"
+                component={Wysiwyg}
+                floatingLabelText="Comment"
+                style={{ width: '100%' }}
+              />
+            </div>
+        }
+        <br /><br />
         <div style={{ textAlign: 'center' }}>
           <RaisedButton
-            label="Create issue"
+            label={this.props.editing ? 'Update issue' : 'Create issue'}
             type="submit"
             primary
+          />
+          <FlatButton
+            label="Cancel"
+            primary
+            style={{ marginLeft: 40, marginBottom: 30 }}
+            onTouchTap={() => this.props.dispatch(goBack())}
           />
         </div>
       </form>
@@ -125,12 +175,11 @@ IssueForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   authUser: PropTypes.number.isRequired,
   users: PropTypes.array.isRequired,
+  initialize: PropTypes.func.isRequired,
+  initialValues: PropTypes.object.isRequired,
+  editing: PropTypes.bool,
 };
 
 export default reduxForm({
   form: 'issueForm',
-  initialValues: {
-    kind: 'bug',
-    priority: 'major',
-  },
 })(IssueForm);
