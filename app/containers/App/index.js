@@ -36,7 +36,7 @@ class App extends React.Component {
     return (
       <div>
         <AppHeader
-          authUser={parseInt(this.props.authState.authUser)}
+          authUser={parseInt(this.props.authState.authUser, 10)}
           isAuthenticated={this.props.authState.isAuthenticated}
           handleAuthChange={this.handleAuthChange}
         />
@@ -44,9 +44,11 @@ class App extends React.Component {
           className="mdl-grid"
           style={{
             justifyContent: 'center',
-            marginTop: 64,
-            maxHeight: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            paddingTop: 74,
             minHeight: 'min-content',
+            height: '100vh',
           }}
         >
           {React.Children.toArray(this.props.children)}

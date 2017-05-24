@@ -48,6 +48,7 @@ export function injectAsyncReducer(store, isValid) {
  * Inject an asynchronously loaded saga
  */
 export function injectAsyncSagas(store, isValid) {
+  const asyncSagas = {};
   return function injectSagas(sagas) {
     if (!isValid) checkStore(store);
 
@@ -61,7 +62,27 @@ export function injectAsyncSagas(store, isValid) {
       '(app/utils...) injectAsyncSagas: Received an empty `sagas` array'
     );
 
-    sagas.map(store.runSaga);
+    if (!asyncSagas[name]) {
+      asyncSagas[name] = [];
+    }
+    sagas.filter((saga) => {
+      if (asyncSagas[name].includes(saga.name)) {
+        return false;
+      }
+      asyncSagas[name].push(saga.name);
+      return true;
+    }).map(store.runSaga);
+  };
+}
+
+export function checkAuth(store) {
+  return (nextState, replace) => {
+    const loggedIn = store.getState().get('auth').get('isAuthenticated');
+    if (!loggedIn &&
+      (nextState.location.pathname === '/issues/new' ||
+      nextState.location.pathname.endsWith('/new'))) {
+      replace('/');
+    }
   };
 }
 
@@ -74,5 +95,6 @@ export function getAsyncInjectors(store) {
   return {
     injectReducer: injectAsyncReducer(store, true),
     injectSagas: injectAsyncSagas(store, true),
+    checkAuth: checkAuth(store),
   };
 }
