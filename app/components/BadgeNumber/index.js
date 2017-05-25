@@ -5,6 +5,7 @@
 */
 
 import React from 'react';
+import { blue50, blue900 } from 'material-ui/styles/colors';
 
 
 function BadgeNumber(props) {
@@ -22,12 +23,12 @@ function BadgeNumber(props) {
 
   switch (props.voted) {
     case true:
-      style.backgroundColor = '#326ca6';
+      style.backgroundColor = blue900;
       style.color = '#fff';
       break;
     default:
-      style.background = 'rgba(0,0,0,.2)';
-      style.color = 'rgba(51,51,51,.8)';
+      style.background = blue50;
+      style.color = blue900;
   }
 
   return (
