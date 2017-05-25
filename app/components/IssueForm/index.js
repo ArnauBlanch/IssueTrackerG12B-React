@@ -55,7 +55,7 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
 
   render() {
     let creator = this.props.initialValues.get('creator');
-    if (creator) {
+    if (typeof creator !== 'undefined') {
       creator = creator.toJS();
     }
     return (
@@ -141,7 +141,7 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
           component={DropzoneInput}
           onChange={this.filesChanged}
           onFocus={this.fileChanged}
-          currentFiles={this.props.initialValues.get('attachments').toJS()}
+          currentFiles={this.props.editing && this.props.initialValues.get('attachments').toJS()}
         />
         {
           this.props.editing &&
