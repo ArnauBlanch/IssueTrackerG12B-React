@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Chip } from 'material-ui';
 import Dropzone from 'react-dropzone';
+import { blue100 as blue } from 'material-ui/styles/colors';
 
 class DropzoneInput extends React.Component { // eslint-disable-line
   render() {
@@ -36,6 +37,7 @@ class DropzoneInput extends React.Component { // eslint-disable-line
               <Chip
                 key={f.name}
                 style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }}
+                backgroundColor={blue}
                 onRequestDelete={() => console.log('delete!')}
               >
                 <a href={f._links.url} target="_blank"><b>{f.name}</b></a>
@@ -44,6 +46,7 @@ class DropzoneInput extends React.Component { // eslint-disable-line
             { this.props.input.value.files && this.props.input.value.files.map((f) => (
               <Chip
                 key={f.name}
+                backgroundColor={blue}
                 style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }}
               >
                 <b>{ f.name }</b>

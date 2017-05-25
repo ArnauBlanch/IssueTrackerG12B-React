@@ -7,6 +7,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
+import { Card } from 'material-ui';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectNewIssuePage, makeSelectAuthUser } from './selectors';
 import IssueForm from '../../components/IssueForm';
@@ -67,16 +68,18 @@ export class NewIssuePage extends React.Component { // eslint-disable-line react
 
   render() {
     return (
-      <div className="mdl-cell mdl-cell--4-col">
-        <Helmet title="Issue Tracker | Create new issue" />
-        <h3 style={{ textAlign: 'center' }}>Create issue</h3>
-        <IssueForm
-          dispatch={this.props.dispatch}
-          authUser={parseInt(this.props.authUser, 10)}
-          onSubmit={this.handleSubmit}
-          users={this.props.NewIssuePage.users}
-          initialValues={{ kind: 'bug', priority: 'major' }}
-        />
+      <div className="mdl-cell mdl-cell--5-col">
+        <Card style={{ paddingTop: 10 }}>
+          <Helmet title="Issue Tracker | Create new issue" />
+          <h3 style={{ textAlign: 'center' }}>Create issue</h3>
+          <IssueForm
+            dispatch={this.props.dispatch}
+            authUser={parseInt(this.props.authUser, 10)}
+            onSubmit={this.handleSubmit}
+            users={this.props.NewIssuePage.users}
+            initialValues={{ kind: 'bug', priority: 'major' }}
+          />
+        </Card>
       </div>
     );
   }
