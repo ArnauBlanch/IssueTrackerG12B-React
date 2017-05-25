@@ -61,7 +61,14 @@ class Wysiwyg extends Component {
       ],
     };
     // editorStyle={{background: 'black', height: '300px'}} in next version to allow resizing on the fly
-    return (<RichTextEditor value={value} onChange={this.onChange} onBlur={onBlur} toolbarConfig={toolbarConfig} />);
+    return (
+      <RichTextEditor
+        value={value}
+        onChange={this.onChange}
+        onBlur={onBlur}
+        toolbarConfig={toolbarConfig}
+      />
+    );
   }
 }
 

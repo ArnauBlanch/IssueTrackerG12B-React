@@ -7,6 +7,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
+import { Card } from 'material-ui';
 import { createStructuredSelector } from 'reselect';
 import makeSelectEditIssuePage from './selectors';
 import { getUsersRequest } from './actions';
@@ -115,25 +116,27 @@ export class EditIssuePage extends React.Component { // eslint-disable-line reac
 
   render() {
     return (
-      <div className="mdl-cell mdl-cell--4-col">
-        <Helmet title="Issue Tracker | Edit [...]" />
-        <h3 style={{ textAlign: 'center' }}>Edit issue</h3>
-        <IssueForm
-          dispatch={this.props.dispatch}
-          authUser={parseInt(this.props.authUser, 10)}
-          onSubmit={this.handleSubmit}
-          users={this.props.EditIssuePage.users}
-          initialValues={{
-            title: issue.title,
-            description: issue.description,
-            kind: issue.kind,
-            priority: issue.priority,
-            creator: issue._links.creator,
-            assignee: issue._links.assignee.id,
-            attachments: issue._embedded.attached_files,
-          }}
-          editing
-        />
+      <div className="mdl-cell mdl-cell--5-col">
+        <Card style={{ paddingTop: 10 }}>
+          <Helmet title="Issue Tracker | Edit [...]" />
+          <h3 style={{ textAlign: 'center' }}>Edit issue</h3>
+          <IssueForm
+            dispatch={this.props.dispatch}
+            authUser={parseInt(this.props.authUser, 10)}
+            onSubmit={this.handleSubmit}
+            users={this.props.EditIssuePage.users}
+            initialValues={{
+              title: issue.title,
+              description: issue.description,
+              kind: issue.kind,
+              priority: issue.priority,
+              creator: issue._links.creator,
+              assignee: issue._links.assignee.id,
+              attachments: issue._embedded.attached_files,
+            }}
+            editing
+          />
+        </Card>
       </div>
     );
   }

@@ -61,6 +61,7 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
     return (
       <form
         onSubmit={this.props.handleSubmit}
+        style={{ marginLeft: 30, marginRight: 30 }}
       >
         <Field
           name="title"

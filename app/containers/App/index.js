@@ -14,6 +14,7 @@
 import React from 'react';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import { blue50 } from 'material-ui/styles/colors';
 import AppHeader from '../../components/AppHeader';
 import { makeSelectAuth } from './selectors';
 import { setAuthToken, setUnauthenticated } from './actions';
@@ -49,6 +50,7 @@ class App extends React.Component {
             paddingTop: 74,
             minHeight: 'min-content',
             height: '100vh',
+            backgroundColor: blue50,
           }}
         >
           {React.Children.toArray(this.props.children)}
