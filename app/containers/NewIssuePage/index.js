@@ -55,7 +55,7 @@ export class NewIssuePage extends React.Component { // eslint-disable-line react
       if (values.get('description')) {
         newIssue.description = values.get('description');
       }
-      if (values.get('assignee')) {
+      if (values.get('assignee') && values.get('assignee') !== 'unassigned') {
         newIssue.assignee_id = values.get('assignee');
       }
       if (this.state.attachments.length > 0) {

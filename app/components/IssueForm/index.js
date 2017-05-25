@@ -30,13 +30,19 @@ const prepareUser = (u) => (
 class IssueForm extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
-    console.log(this.props.initialValues);
     this.state = { files: [] };
     this.filesChanged = this.filesChanged.bind(this);
   }
 
   componentWillMount() {
-    this.props.initialize(this.props.initialValues);
+    const values = this.props.initialValues;
+    this.props.initialize({
+      title: values.get('title'),
+      description: values.get('description'),
+      kind: values.get('kind'),
+      priority: values.get('priority'),
+      assignee: values.get('assignee'),
+    });
   }
 
   filesChanged(e) {
@@ -98,7 +104,7 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
           style={{ width: '100%' }}
           selectedMenuItemStyle={{ color: blue900 }}
         >
-          <MenuItem value="" />
+          <MenuItem value="unassigned" />
           { this.props.users.map((u) => <MenuItem key={u.id} value={u.id} primaryText={prepareUser(u)} />) }
         </Field><br />
         <div style={{ textAlign: 'center' }}>

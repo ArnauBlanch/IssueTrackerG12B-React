@@ -4,7 +4,6 @@ import Dropzone from 'react-dropzone';
 
 class DropzoneInput extends React.Component { // eslint-disable-line
   render() {
-    console.log(this.props);
     return (
       <div style={{ textAlign: 'center' }}>
         <Dropzone
@@ -33,18 +32,15 @@ class DropzoneInput extends React.Component { // eslint-disable-line
         </Dropzone>
         { (this.props.input.value.files || this.props.currentFiles) &&
           <div>
-            { this.props.currentFiles && this.props.currentFiles.map((f) => {
-              console.log(f);
-              return (
-                <Chip
-                  key={f.name}
-                  style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }}
-                  onRequestDelete={() => console.log('delete!')}
-                >
-                  <a href={f._links.url} target="_blank"><b>{f.name}</b></a>
-                </Chip>
-              );
-            }) }
+            { this.props.currentFiles && this.props.currentFiles.map((f) => (
+              <Chip
+                key={f.name}
+                style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }}
+                onRequestDelete={() => console.log('delete!')}
+              >
+                <a href={f._links.url} target="_blank"><b>{f.name}</b></a>
+              </Chip>
+            )) }
             { this.props.input.value.files && this.props.input.value.files.map((f) => (
               <Chip
                 key={f.name}
