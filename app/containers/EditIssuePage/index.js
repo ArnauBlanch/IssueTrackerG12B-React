@@ -8,6 +8,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { Card } from 'material-ui';
+import { goBack } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import makeSelectEditIssuePage from './selectors';
 import { getUsersRequest } from './actions';
@@ -64,6 +65,12 @@ export class EditIssuePage extends React.Component { // eslint-disable-line reac
   componentWillMount() {
     this.props.dispatch(getUsersRequest());
     // this.props.dispatch(getIssueRequest());
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (typeof nextProps.authUser === 'undefined') {
+      this.props.dispatch(goBack());
+    }
   }
 
   handleSubmit(values) {

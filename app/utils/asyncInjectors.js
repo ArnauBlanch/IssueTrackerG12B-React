@@ -80,7 +80,7 @@ export function checkAuth(store) {
     const loggedIn = store.getState().get('auth').get('isAuthenticated');
     if (!loggedIn &&
       (nextState.location.pathname === '/issues/new' ||
-      nextState.location.pathname.endsWith('/new'))) {
+      nextState.location.pathname.endsWith('/edit'))) {
       replace('/');
     }
   };

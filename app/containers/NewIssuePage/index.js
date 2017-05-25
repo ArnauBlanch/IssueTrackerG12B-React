@@ -6,6 +6,7 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { goBack } from 'react-router-redux';
 import Helmet from 'react-helmet';
 import { Card } from 'material-ui';
 import { createStructuredSelector } from 'reselect';
@@ -22,6 +23,11 @@ export class NewIssuePage extends React.Component { // eslint-disable-line react
   }
   componentWillMount() {
     this.props.dispatch(getUsersRequest());
+  }
+  componentWillReceiveProps(nextProps) {
+    if (typeof nextProps.authUser === 'undefined') {
+      this.props.dispatch(goBack());
+    }
   }
 
   handleSubmit(values) {
