@@ -57,10 +57,60 @@ export class EditIssuePage extends React.Component { // eslint-disable-line reac
     this.state = {
       attachments: [],
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.sendIssue = this.sendIssue.bind(this);
   }
   componentWillMount() {
     this.props.dispatch(getUsersRequest());
     // this.props.dispatch(getIssueRequest());
+  }
+
+  handleSubmit(values) {
+    if (values.get('attachments')) {
+      values.get('attachments').files.forEach((a) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(a);
+        reader.onload = () => {
+          const { attachments } = this.state;
+          attachments.push({
+            name: a.name,
+            content: reader.result,
+          });
+          this.setState({ attachments });
+          this.sendIssue(values);
+        };
+        // reader.onError = () => this.setState({ imageError: true });
+      });
+    } else {
+      this.sendIssue(values);
+    }
+  }
+
+  sendIssue(values) {
+    if ((values.attachments && this.state.attachments.length === values.attachments.files.length)
+      || typeof values.attachments === 'undefined') {
+      const oldValues = issue;
+      const newValues = values.toJS();
+      console.log(newValues);
+      const editedValues = {};
+      if (newValues.title !== oldValues.title) {
+        editedValues.title = newValues.title;
+      } if (newValues.description !== oldValues.description) {
+        editedValues.description = newValues.description;
+      } if (newValues.kind !== oldValues.kind) {
+        editedValues.kind = newValues.kind;
+      } if (newValues.priority !== oldValues.priority) {
+        editedValues.priority = newValues.priority;
+      } if (newValues.assignee !== oldValues.assignee) {
+        editedValues.assignee = newValues.assignee === 'unassigned' ? null : newValues.assignee;
+      } if (newValues.comment) {
+        editedValues.comment = newValues.comment;
+      } if (this.state.attachments.length > 0) {
+        editedValues.attached_files = this.state.attachments;
+      }
+      // this.props.dispatch(editIssueRequest(id, newValues));
+      console.log(editedValues);
+    }
   }
 
   render() {
