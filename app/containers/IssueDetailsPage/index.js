@@ -9,6 +9,11 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { CircularProgress, Card, FlatButton, DropDownMenu, MenuItem, Dialog } from 'material-ui';
 import { createStructuredSelector } from 'reselect';
+import { CircularProgress, Card, FlatButton } from 'material-ui';
+import { getIssueRequest, deleteComment } from './actions';
+import { makeSelectAuthState } from '../IssueListPage/selectors';
+import IssueComment from '../../components/IssueComment';
+import CommentForm from '../../components/CommentForm';
 import makeSelectIssueDetailsPage from './selectors';
 import { getIssueRequest } from './actions';
 import { makeSelectAuthUser } from '../NewIssuePage/selectors';
@@ -20,16 +25,20 @@ import BadgeNumber from '../../components/BadgeNumber';
 
 
 export class IssueDetailsPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  state = {
-    dialogOpen: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = { newComment: false };
+    this.deleteComment = this.deleteComment.bind(this);
+    this.toggleNewComment = this.toggleNewComment.bind(this);
+    this.createComment = this.createComment.bind(this);
+  }
 
   componentWillMount() {
     this.props.dispatch(getIssueRequest(this.props.params.issueID));
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.authUser !== this.props.authUser) {
+    if (nextProps.authState.authUser !== this.props.authState.authUser) {
       this.props.dispatch(getIssueRequest(this.props.params.issueID));
     }
   }
@@ -42,10 +51,23 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
     this.setState({ dialogOpen: false });
   };
 
+  toggleNewComment() {
+    this.setState({ newComment: !this.state.newComment });
+  }
+  createComment(values) {
+    console.log(values.get('comment'));
+    this.setState({ newComment: false });
+  }
+
+  deleteComment(commentUrl) {
+    this.props.dispatch(deleteComment(commentUrl));
+  }
+
   render() {
     const { issue, error, currentlySending } = this.props.IssueDetailsPage;
     const { issueID } = this.props.params;
-    console.log(issue);
+    // console.log(issue);
+    // console.log(this.state.newComment);
     return (
       <div className="mdl-cell mdl-cell--9-col mdl-cell--9-tablet">
         { currentlySending || error || (issue && issue.id !== parseInt(issueID, 10)) ?
@@ -171,11 +193,26 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
 
                 </div>
                 <div
-                  className="mdl-cell mdl-cell--8-col"
+                  className="mdl-cell mdl-cell--7-col"
                 >
-                  <h5>Comments (2)</h5>
+                  <h5>Comments ({issue._embedded.comments.length})</h5>
                   <div>
+                    { issue._embedded.comments.map((c, index) => (
+                      <IssueComment
+                        key={index}
+                        comment={c}
+                        isAuthenticated={this.props.authState.isAuthenticated}
+                        onDelete={() => this.deleteComment(c._links.self.href)}
+                      />
+                    ))}
                   </div>
+                  { this.state.newComment ?
+                    <CommentForm
+                      onSubmit={this.createComment}
+                      onCancel={this.toggleNewComment}
+                    />
+                    : <FlatButton label="New comment" primary onTouchTap={this.toggleNewComment} />
+                  }
                 </div>
               </div>
             </Card>
@@ -190,12 +227,12 @@ IssueDetailsPage.propTypes = {
   IssueDetailsPage: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   params: PropTypes.object.isRequired,
-  authUser: PropTypes.number,
+  authState: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   IssueDetailsPage: makeSelectIssueDetailsPage(),
-  authUser: makeSelectAuthUser(),
+  authState: makeSelectAuthState(),
 });
 
 function mapDispatchToProps(dispatch) {

@@ -67,6 +67,7 @@ class Wysiwyg extends Component {
         onChange={this.onChange}
         onBlur={onBlur}
         toolbarConfig={toolbarConfig}
+        placeholder="What do you want to say?"
       />
     );
   }
