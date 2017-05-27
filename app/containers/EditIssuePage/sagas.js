@@ -1,4 +1,5 @@
 import { take, call, put, fork } from 'redux-saga/effects';
+import { push } from 'react-router-redux';
 import { getUsersSuccess, editIssueSuccess, editIssueFailure } from './actions';
 import { GET_USERS_REQUEST, EDIT_ISSUE_REQUEST } from './constants';
 import request from '../../utils/request';
@@ -23,6 +24,7 @@ export function* editIssue() {
       const response = yield call(request, `/issues/${issueID}`, 'PATCH', newValues, true);
       if (response.status === 200) {
         yield put(editIssueSuccess());
+        yield put(push(`/issues/${issueID}`));
       } else {
         const responseBody = yield response.json();
         yield put(editIssueFailure(responseBody.error));

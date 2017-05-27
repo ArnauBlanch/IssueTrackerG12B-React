@@ -7,51 +7,15 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import { Card } from 'material-ui';
+import { Card, CircularProgress } from 'material-ui';
 import { goBack } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import makeSelectEditIssuePage from './selectors';
-import { getUsersRequest } from './actions';
+import { getUsersRequest, editIssueRequest } from './actions';
 import IssueForm from '../../components/IssueForm';
 import { makeSelectAuthUser } from '../NewIssuePage/selectors';
-
-const issue = {
-  id: 10,
-  title: 'test title',
-  description: 'test <b>description</b>',
-  kind: 'bug',
-  priority: 'major',
-  _links: {
-    creator: {
-      name: 'Arnau Blanch Cortès',
-      nickname: 'ArnauBlanch',
-      image: {
-        href: 'http://pbs.twimg.com/profile_images/841205642769629184/ba6_2x4__normal.jpg',
-      },
-    },
-    assignee: {
-      id: 2,
-      name: 'Arnau Blanch Cortès',
-      nickname: 'ArnauBlanch',
-      image: {
-        href: 'http://pbs.twimg.com/profile_images/841205642769629184/ba6_2x4__normal.jpg',
-      },
-    },
-  },
-  _embedded: {
-    attached_files: [
-      {
-        name: 'Firefox_wallpaper.png',
-        _links: {
-          self: {
-            href: '/attached_files/16',
-          },
-          url: 'https://s3-us-west-1.amazonaws.com/aswissuetrackerg12b/attached_files/files/000/000/016/original/Firefox_wallpaper.png?1495644360',
-        },
-      },
-    ],
-  },
-};
+import { getIssueRequest } from '../IssueDetailsPage/actions';
+import makeSelectIssueDetailsPage from '../IssueDetailsPage/selectors';
 
 export class EditIssuePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -64,7 +28,7 @@ export class EditIssuePage extends React.Component { // eslint-disable-line reac
   }
   componentWillMount() {
     this.props.dispatch(getUsersRequest());
-    // this.props.dispatch(getIssueRequest());
+    this.props.dispatch(getIssueRequest(this.props.params.issueID));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -74,6 +38,7 @@ export class EditIssuePage extends React.Component { // eslint-disable-line reac
   }
 
   handleSubmit(values) {
+    console.log('handle submit');
     if (values.get('attachments')) {
       values.get('attachments').files.forEach((a) => {
         const reader = new FileReader();
@@ -95,55 +60,70 @@ export class EditIssuePage extends React.Component { // eslint-disable-line reac
   }
 
   sendIssue(values) {
+    const { issue } = this.props.IssueDetailsPage;
     if ((values.attachments && this.state.attachments.length === values.attachments.files.length)
       || typeof values.attachments === 'undefined') {
       const oldValues = issue;
       const newValues = values.toJS();
+      console.log(oldValues);
       console.log(newValues);
       const editedValues = {};
       if (newValues.title !== oldValues.title) {
         editedValues.title = newValues.title;
-      } if (newValues.description !== oldValues.description) {
+      }
+      if (newValues.description !== oldValues.description) {
         editedValues.description = newValues.description;
-      } if (newValues.kind !== oldValues.kind) {
+      }
+      if (newValues.kind !== oldValues.kind) {
         editedValues.kind = newValues.kind;
-      } if (newValues.priority !== oldValues.priority) {
+      }
+      if (newValues.priority !== oldValues.priority) {
         editedValues.priority = newValues.priority;
-      } if (newValues.assignee !== oldValues.assignee) {
-        editedValues.assignee = newValues.assignee === 'unassigned' ? null : newValues.assignee;
-      } if (newValues.comment) {
+      }
+      if ((newValues.assignee_id !== oldValues.assignee_id)
+      && !(typeof oldValues.assignee_id === 'undefined' && newValues.assignee_id === 'unassigned')) {
+        editedValues.assignee_id = newValues.assignee_id === 'unassigned' ? null : newValues.assignee_id;
+      }
+      if (newValues.comment) {
         editedValues.comment = newValues.comment;
-      } if (this.state.attachments.length > 0) {
+      }
+      if (this.state.attachments.length > 0) {
         editedValues.attached_files = this.state.attachments;
       }
-      // this.props.dispatch(editIssueRequest(id, newValues));
+      this.props.dispatch(editIssueRequest(this.props.params.issueID, editedValues));
       console.log(editedValues);
     }
   }
 
   render() {
+    const { issue } = this.props.IssueDetailsPage;
+    const fetchingIssue = this.props.IssueDetailsPage.currentlySending;
+    const { issueID } = this.props.params;
     return (
-      <div className="mdl-cell mdl-cell--5-col">
-        <Card style={{ paddingTop: 10 }}>
-          <Helmet title="Issue Tracker | Edit [...]" />
-          <h3 style={{ textAlign: 'center' }}>Edit issue</h3>
-          <IssueForm
-            dispatch={this.props.dispatch}
-            authUser={parseInt(this.props.authUser, 10)}
-            onSubmit={this.handleSubmit}
-            users={this.props.EditIssuePage.users}
-            initialValues={{
-              title: issue.title,
-              description: issue.description,
-              kind: issue.kind,
-              priority: issue.priority,
-              creator: issue._links.creator,
-              assignee: issue._links.assignee.id,
-              attachments: issue._embedded.attached_files,
-            }}
-            editing
-          />
-        </Card>
+      <div style={{ maxWidth: 550, width: '100%', margin: 5 }}>
+        { fetchingIssue || !issue || issue.id !== parseInt(issueID, 10) ?
+          <CircularProgress size={60} thickness={6} />
+          : <Card style={{ paddingTop: 10 }}>
+            <Helmet title="Issue Tracker | Edit [...]" />
+            <h3 style={{ textAlign: 'center' }}>Edit issue</h3>
+            <IssueForm
+              dispatch={this.props.dispatch}
+              authUser={parseInt(this.props.authUser, 10)}
+              onSubmit={this.handleSubmit}
+              users={this.props.EditIssuePage.users}
+              initialValues={{
+                title: issue.title,
+                description: issue.description,
+                kind: issue.kind,
+                priority: issue.priority,
+                creator: issue._links.creator,
+                assignee_id: issue._links.assignee ? issue._links.assignee.id : 'unassigned',
+                attachments: issue._embedded.attached_files,
+              }}
+              editing
+            />
+          </Card>
+        }
       </div>
     );
   }
@@ -153,10 +133,12 @@ EditIssuePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   EditIssuePage: PropTypes.object.isRequired,
   authUser: PropTypes.number.isRequired,
+  IssueDetailsPage: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   EditIssuePage: makeSelectEditIssuePage(),
+  IssueDetailsPage: makeSelectIssueDetailsPage(),
   authUser: makeSelectAuthUser(),
 });
 

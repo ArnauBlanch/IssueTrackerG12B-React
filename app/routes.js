@@ -67,12 +67,36 @@ export default function createRoutes(store) {
           import('containers/EditIssuePage/reducer'),
           import('containers/EditIssuePage/sagas'),
           import('containers/EditIssuePage'),
+          import('containers/IssueDetailsPage/reducer'),
+          import('containers/IssueDetailsPage/sagas'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component, reducer2, sagas2]) => {
+          injectReducer('editIssuePage', reducer.default);
+          injectSagas(sagas.default);
+          injectReducer('issueDetailsPage', reducer2.default);
+          injectSagas(sagas2.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/issues/:issueID',
+      name: 'issueDetailsPage',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/IssueDetailsPage/reducer'),
+          import('containers/IssueDetailsPage/sagas'),
+          import('containers/IssueDetailsPage'),
         ]);
 
         const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, sagas, component]) => {
-          injectReducer('editIssuePage', reducer.default);
+          injectReducer('issueDetailsPage', reducer.default);
           injectSagas(sagas.default);
           renderRoute(component);
         });
