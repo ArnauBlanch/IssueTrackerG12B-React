@@ -9,6 +9,8 @@ import {
   GET_ISSUE_SUCCESS,
   GET_ISSUE_FAILURE,
   CURRENTLY_SENDING,
+  VOTE_ISSUE,
+  WATCH_ISSUE,
 } from './constants';
 
 export function getIssueRequest(id) {
@@ -25,4 +27,12 @@ export function getIssueFailure() {
 
 export function currentlySending(sending) {
   return { type: CURRENTLY_SENDING, sending };
+}
+
+export function voteIssue(id) {
+  return { type: VOTE_ISSUE, id };
+}
+
+export function watchIssue(id) {
+  return { type: WATCH_ISSUE, id };
 }
