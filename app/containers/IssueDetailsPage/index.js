@@ -75,7 +75,7 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
                 <div
                   className="mdl-cell mdl-cell--12-col"
                 >
-                  <b style={{ marginRight: 10 }}>Issue #{issue.id}</b>
+                  <b style={{ marginRight: 10, fontSize: 20 }}>Issue #{issue.id}</b>
                   <StatusLabel status={issue.status} />
                   <div style={{ float: 'right' }}>
 
