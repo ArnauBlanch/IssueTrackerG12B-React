@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { CircularProgress, Card, FlatButton, DropDownMenu, MenuItem, Dialog } from 'material-ui';
 import { createStructuredSelector } from 'reselect';
-import { getIssueRequest, deleteComment } from './actions';
+import { getIssueRequest, deleteComment, voteIssue, watchIssue } from './actions';
 import { makeSelectAuthState } from '../IssueListPage/selectors';
 import IssueComment from '../../components/IssueComment';
 import CommentForm from '../../components/CommentForm';
@@ -121,7 +121,6 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
                       label="Attach"
                       labelStyle={{ fontWeight: '500' }}
                       style={{ marginLeft: '10' }}
-                      /* href={`/issues/${issue.id}/edit`} */
                     />
 
                     <FlatButton
@@ -185,6 +184,29 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
                     </div>
                     <div style={{ paddingTop: '3', flex: 'none', width: '173px' }}>
                       <BadgeNumber number={issue.votes} focused={issue.voted_by_current_user} />
+                      <a
+                        style={{ marginLeft: '5' }}
+                        onClick={() => this.props.dispatch(voteIssue(issue.id))}
+                        role="link"
+                      >
+                        {issue.voted_by_current_user ? 'Remove vote' : 'Vote for this issue'}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div style={{ height: '28px', display: 'flex', width: '100%' }}>
+                    <div style={{ paddingTop: '3', flex: 'none', width: '120px', fontWeight: 'bold', textAlign: 'right', paddingRight: '15' }}>
+                      Watchers
+                    </div>
+                    <div style={{ paddingTop: '3', flex: 'none', width: '173px' }}>
+                      <BadgeNumber number={issue.watchers} focused={issue.watched_by_current_user} />
+                      <a
+                        style={{ marginLeft: '5' }}
+                        onClick={() => this.props.dispatch(watchIssue(issue.id))}
+                        role="link"
+                      >
+                        {issue.watched_by_current_user ? 'Stop watching' : 'Watch this issue'}
+                      </a>
                     </div>
                   </div>
 

@@ -9,3 +9,5 @@ export const GET_ISSUE_SUCCESS = 'app/IssueDetailsPage/GET_ISSUE_SUCCESS';
 export const GET_ISSUE_FAILURE = 'app/IssueDetailsPage/GET_ISSUE_FAILURE';
 export const CURRENTLY_SENDING = 'app/IssueDetailsPage/CURRENTLY_SENDING';
 export const DELETE_COMMENT = 'app/IssueDetailsPage/DELETE_COMMENT';
+export const VOTE_ISSUE = 'app/IssueDetailsPage/VOTE_ISSUE';
+export const WATCH_ISSUE = 'app/IssueDetailsPage/WATCH_ISSUE';
