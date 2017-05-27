@@ -38,7 +38,6 @@ export class EditIssuePage extends React.Component { // eslint-disable-line reac
   }
 
   handleSubmit(values) {
-    console.log('handle submit');
     if (values.get('attachments')) {
       values.get('attachments').files.forEach((a) => {
         const reader = new FileReader();
@@ -65,8 +64,6 @@ export class EditIssuePage extends React.Component { // eslint-disable-line reac
       || typeof values.attachments === 'undefined') {
       const oldValues = issue;
       const newValues = values.toJS();
-      console.log(oldValues);
-      console.log(newValues);
       const editedValues = {};
       if (newValues.title !== oldValues.title) {
         editedValues.title = newValues.title;
@@ -91,7 +88,6 @@ export class EditIssuePage extends React.Component { // eslint-disable-line reac
         editedValues.attached_files = this.state.attachments;
       }
       this.props.dispatch(editIssueRequest(this.props.params.issueID, editedValues));
-      console.log(editedValues);
     }
   }
 
@@ -134,6 +130,7 @@ EditIssuePage.propTypes = {
   EditIssuePage: PropTypes.object.isRequired,
   authUser: PropTypes.number.isRequired,
   IssueDetailsPage: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
