@@ -91,13 +91,17 @@ export default function createRoutes(store) {
           import('containers/IssueDetailsPage/reducer'),
           import('containers/IssueDetailsPage/sagas'),
           import('containers/IssueDetailsPage'),
+          import('containers/CommentsSection/reducer'),
+          import('containers/CommentsSection/sagas'),
         ]);
 
         const renderRoute = loadModule(cb);
 
-        importModules.then(([reducer, sagas, component]) => {
+        importModules.then(([reducer, sagas, component, cReducer, cSagas]) => {
           injectReducer('issueDetailsPage', reducer.default);
           injectSagas(sagas.default);
+          injectReducer('commentsSection', cReducer.default);
+          injectSagas(cSagas.default);
           renderRoute(component);
         });
 

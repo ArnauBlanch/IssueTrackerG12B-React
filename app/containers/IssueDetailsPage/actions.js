@@ -9,7 +9,6 @@ import {
   GET_ISSUE_SUCCESS,
   GET_ISSUE_FAILURE,
   CURRENTLY_SENDING,
-  DELETE_COMMENT,
 } from './constants';
 
 export function getIssueRequest(id) {
@@ -26,8 +25,4 @@ export function getIssueFailure() {
 
 export function currentlySending(sending) {
   return { type: CURRENTLY_SENDING, sending };
-}
-
-export function deleteComment(url) {
-  return { type: DELETE_COMMENT, url };
 }

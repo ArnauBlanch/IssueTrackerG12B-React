@@ -12,7 +12,7 @@ function BadgeNumber(props) {
   const style = {
     borderRadius: '2em',
     fontSize: '11px',
-    fontWeight: '700',
+    fontWeight: 700,
     lineHeight: '.99',
     minHeight: '1.5em',
     minWidth: '2.1em',
@@ -38,7 +38,7 @@ function BadgeNumber(props) {
 
 BadgeNumber.propTypes = {
   number: React.PropTypes.number.isRequired,
-  focused: React.PropTypes.boolean,
+  focused: React.PropTypes.bool,
 };
 
 export default BadgeNumber;

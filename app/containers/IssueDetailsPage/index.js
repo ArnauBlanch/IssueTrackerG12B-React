@@ -9,10 +9,9 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { CircularProgress, Card, FlatButton, DropDownMenu, MenuItem, Dialog } from 'material-ui';
 import { createStructuredSelector } from 'reselect';
-import { getIssueRequest, deleteComment } from './actions';
+import { getIssueRequest } from './actions';
 import { makeSelectAuthState } from '../IssueListPage/selectors';
-import IssueComment from '../../components/IssueComment';
-import CommentForm from '../../components/CommentForm';
+import CommentsSection from '../CommentsSection';
 import makeSelectIssueDetailsPage from './selectors';
 import StatusLabel from '../../components/StatusLabel';
 import UserAvatar from '../../components/UserAvatar';
@@ -24,10 +23,9 @@ import BadgeNumber from '../../components/BadgeNumber';
 export class IssueDetailsPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
-    this.state = { newComment: false };
-    this.deleteComment = this.deleteComment.bind(this);
-    this.toggleNewComment = this.toggleNewComment.bind(this);
-    this.createComment = this.createComment.bind(this);
+    this.state = { dialogOpen: false };
+    this.handleDialogOpen = this.handleDialogOpen.bind(this);
+    this.handleDialogClose = this.handleDialogClose.bind(this);
   }
 
   componentWillMount() {
@@ -48,33 +46,21 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
     this.setState({ dialogOpen: false });
   };
 
-  toggleNewComment() {
-    this.setState({ newComment: !this.state.newComment });
-  }
-  createComment(values) {
-    console.log(values.get('comment'));
-    this.setState({ newComment: false });
-  }
-
-  deleteComment(commentUrl) {
-    this.props.dispatch(deleteComment(commentUrl));
-  }
-
   render() {
     const { issue, error, currentlySending } = this.props.IssueDetailsPage;
     const { issueID } = this.props.params;
-    // console.log(issue);
-    // console.log(this.state.newComment);
+    const { isAuthenticated } = this.props.authState;
     return (
       <div className="mdl-cell mdl-cell--9-col mdl-cell--9-tablet">
-        { currentlySending || error || (issue && issue.id !== parseInt(issueID, 10)) ?
-          <div>
-            { !error ? <CircularProgress size={60} thickness={6} />
-              : <h5 style={{ color: 'red', fontWeight: 700 }}>
-                There was an error when fetching the issue
-              </h5>
-            }
-          </div>
+        { (currentlySending && (!issue || issue.id !== parseInt(issueID, 10)))
+          || error || (issue && issue.id !== parseInt(issueID, 10)) ?
+            <div>
+              { !error ? <CircularProgress size={60} thickness={6} />
+                : <h5 style={{ color: 'red', fontWeight: 700 }}>
+                  There was an error when fetching the issue
+                </h5>
+              }
+            </div>
           : issue && <div>
             <Helmet
               title={`Issue Tracker | ${'hello'}`}
@@ -95,8 +81,8 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
 
                     <DropDownMenu
                       value={0}
-                      labelStyle={{ fontWeight: '500' }}
-                      style={{ marginLeft: '10' }}
+                      labelStyle={{ fontWeight: 500 }}
+                      style={{ marginLeft: 10 }}
                       /* href={`/issues/${issue.id}/edit`} */
                     >
                       <MenuItem value={0} primaryText="Workflow" hidden="true" />
@@ -119,15 +105,15 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
 
                     <FlatButton
                       label="Attach"
-                      labelStyle={{ fontWeight: '500' }}
-                      style={{ marginLeft: '10' }}
+                      labelStyle={{ fontWeight: 500 }}
+                      style={{ marginLeft: 10 }}
                       /* href={`/issues/${issue.id}/edit`} */
                     />
 
                     <FlatButton
                       label="Edit"
-                      labelStyle={{ fontWeight: '500' }}
-                      style={{ marginLeft: '10' }}
+                      labelStyle={{ fontWeight: 500 }}
+                      style={{ marginLeft: 10 }}
                       href={`/issues/${issue.id}/edit`}
                     />
                   </div>
@@ -142,7 +128,7 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
                   className="mdl-cell mdl-cell--4-col"
                 >
                   <div style={{ display: 'flex', width: '100%' }}>
-                    <div style={{ paddingTop: '5', flex: 'none', width: '120px', fontWeight: 'bold', textAlign: 'right', paddingRight: '15' }}>
+                    <div style={{ paddingTop: 5, flex: 'none', width: '120px', fontWeight: 'bold', textAlign: 'right', paddingRight: 15 }}>
                       Assignee
                     </div>
                     <div style={{ flex: 'none', width: '173px' }}>
@@ -150,40 +136,40 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
                     </div>
                   </div>
 
-                  <div style={{ height: '28px', display: 'flex', width: '100%', marginTop: '5' }}>
-                    <div style={{ paddingTop: '3', flex: 'none', width: '120px', fontWeight: 'bold', textAlign: 'right', paddingRight: '15' }}>
+                  <div style={{ height: '28px', display: 'flex', width: '100%', marginTop: 5 }}>
+                    <div style={{ paddingTop: 3, flex: 'none', width: '120px', fontWeight: 'bold', textAlign: 'right', paddingRight: 15 }}>
                       Type
                     </div>
-                    <div style={{ paddingTop: '3', flex: 'none', width: '173px' }}>
+                    <div style={{ paddingTop: 3, flex: 'none', width: '173px' }}>
                       <KindIcon kind={issue.kind} />
-                      <span style={{ marginLeft: '5' }}>{issue.kind}</span>
+                      <span style={{ marginLeft: 5 }}>{issue.kind}</span>
                     </div>
                   </div>
 
                   <div style={{ height: '28px', display: 'flex', width: '100%' }}>
-                    <div style={{ paddingTop: '3', flex: 'none', width: '120px', fontWeight: 'bold', textAlign: 'right', paddingRight: '15' }}>
+                    <div style={{ paddingTop: 3, flex: 'none', width: '120px', fontWeight: 'bold', textAlign: 'right', paddingRight: 15 }}>
                       Priority
                     </div>
-                    <div style={{ paddingTop: '3', flex: 'none', width: '173px' }}>
+                    <div style={{ paddingTop: 3, flex: 'none', width: '173px' }}>
                       <PriorityIcon priority={issue.priority} />
-                      <span style={{ marginLeft: '5' }}>{issue.priority}</span>
+                      <span style={{ marginLeft: 5 }}>{issue.priority}</span>
                     </div>
                   </div>
 
                   <div style={{ height: '28px', display: 'flex', width: '100%' }}>
-                    <div style={{ paddingTop: '3', flex: 'none', width: '120px', fontWeight: 'bold', textAlign: 'right', paddingRight: '15' }}>
+                    <div style={{ paddingTop: 3, flex: 'none', width: '120px', fontWeight: 'bold', textAlign: 'right', paddingRight: 15 }}>
                       Status
                     </div>
-                    <div style={{ paddingTop: '3', flex: 'none', width: '173px' }}>
+                    <div style={{ paddingTop: 3, flex: 'none', width: '173px' }}>
                       <StatusLabel status={issue.status} />
                     </div>
                   </div>
 
                   <div style={{ height: '28px', display: 'flex', width: '100%' }}>
-                    <div style={{ paddingTop: '3', flex: 'none', width: '120px', fontWeight: 'bold', textAlign: 'right', paddingRight: '15' }}>
+                    <div style={{ paddingTop: 3, flex: 'none', width: '120px', fontWeight: 'bold', textAlign: 'right', paddingRight: 15 }}>
                       Votes
                     </div>
-                    <div style={{ paddingTop: '3', flex: 'none', width: '173px' }}>
+                    <div style={{ paddingTop: 3, flex: 'none', width: '173px' }}>
                       <BadgeNumber number={issue.votes} focused={issue.voted_by_current_user} />
                     </div>
                   </div>
@@ -192,24 +178,10 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
                 <div
                   className="mdl-cell mdl-cell--7-col"
                 >
-                  <h5>Comments ({issue._embedded.comments.length})</h5>
-                  <div>
-                    { issue._embedded.comments.map((c, index) => (
-                      <IssueComment
-                        key={index}
-                        comment={c}
-                        isAuthenticated={this.props.authState.isAuthenticated}
-                        onDelete={() => this.deleteComment(c._links.self.href)}
-                      />
-                    ))}
-                  </div>
-                  { this.state.newComment ?
-                    <CommentForm
-                      onSubmit={this.createComment}
-                      onCancel={this.toggleNewComment}
-                    />
-                    : <FlatButton label="New comment" primary onTouchTap={this.toggleNewComment} />
-                  }
+                  <CommentsSection
+                    issue={issue}
+                    isAuthenticated={isAuthenticated}
+                  />
                 </div>
               </div>
             </Card>
