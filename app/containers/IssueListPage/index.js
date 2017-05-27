@@ -95,7 +95,7 @@ export class IssueListPage extends React.Component { // eslint-disable-line reac
                       <TableRowColumn style={columnIconWidth}><PriorityIcon priority={issue.priority} /></TableRowColumn>
                       <TableRowColumn style={statusWidth}><StatusLabel status={issue.status} /></TableRowColumn>
                       <TableRowColumn className="mdl-cell--hide-phone" style={votesWidth}>
-                        { issue.votes > 0 && <BadgeNumber number={issue.votes} voted={issue.voted_by_current_user} /> }
+                        { issue.votes > 0 && <BadgeNumber number={issue.votes} focused={issue.voted_by_current_user} /> }
                       </TableRowColumn>
                       <TableRowColumn style={assigneeWidth} className="mdl-cell--hide-phone mdl-cell--hide-tablet">
                         { issue._links.assignee &&
