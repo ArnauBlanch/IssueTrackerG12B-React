@@ -11,6 +11,12 @@ import Wysiwyg from '../Wysiwyg';
 
 
 class CommentForm extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  componentWillMount() {
+    if (this.props.initialBody) {
+      this.props.initialize({ comment: this.props.initialBody });
+    }
+  }
+
   render() {
     const { commentError, commentEmpty } = this.props;
     return (
@@ -23,10 +29,10 @@ class CommentForm extends React.Component { // eslint-disable-line react/prefer-
           component={Wysiwyg}
           style={{ width: '100%' }}
         />
-        { commentError && <span style={{ color: 'red', marginBottom: 15 }}>{'There was an error when sending the comment'}</span> }
-        { commentEmpty && <span style={{ color: 'red', marginBottom: 15 }}>{'The comment can\'t be blank'}</span> }
+        { commentError && <span style={{ color: 'red' }}>{'There was an error when sending the comment'}<br /></span> }
+        { commentEmpty && <span style={{ color: 'red' }}>{'The comment can\'t be blank'}<br /></span> }
         <RaisedButton
-          label="Comment"
+          label={this.props.editing ? 'Edit' : 'Comment'}
           type="submit"
           primary
           style={{ marginTop: 15 }}
@@ -47,8 +53,10 @@ CommentForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   commentError: PropTypes.bool.isRequired,
   commentEmpty: PropTypes.bool,
+  initialize: PropTypes.func.isRequired,
+  initialBody: PropTypes.string,
+  editing: PropTypes.bool,
+  commentID: PropTypes.number, // eslint-disable-line
 };
 
-export default reduxForm({
-  form: 'commentForm',
-})(CommentForm);
+export default reduxForm({})(CommentForm);
