@@ -10,7 +10,7 @@ import { TextField, SelectField } from 'redux-form-material-ui';
 import { MenuItem, RaisedButton, FlatButton } from 'material-ui';
 import { blue900 } from 'material-ui/styles/colors';
 import { goBack } from 'react-router-redux';
-import Wysiwyg from './Wysiwyg';
+import Wysiwyg from '../Wysiwyg';
 import DropzoneInput from './DropzoneInput';
 import { kinds, priorities } from './kinds-priorities';
 
@@ -35,14 +35,13 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
   }
 
   componentWillMount() {
-    console.log(this.props.initialValues.toJS());
-    const values = this.props.initialValues;
+    const values = this.props.initialValues.toJS();
     this.props.initialize({
-      title: values.get('title'),
-      description: values.get('description'),
-      kind: values.get('kind'),
-      priority: values.get('priority'),
-      assignee_id: values.get('assignee_id'),
+      title: values.title,
+      description: values.description,
+      kind: values.kind,
+      priority: values.priority,
+      assignee_id: values.assignee_id,
     });
   }
 
