@@ -21,7 +21,7 @@ function BadgeNumber(props) {
     textAlign: 'center',
   };
 
-  switch (props.voted) {
+  switch (props.focused) {
     case true:
       style.backgroundColor = blue900;
       style.color = '#fff';
@@ -38,7 +38,7 @@ function BadgeNumber(props) {
 
 BadgeNumber.propTypes = {
   number: React.PropTypes.number.isRequired,
-  voted: React.PropTypes.boolean,
+  focused: React.PropTypes.boolean,
 };
 
 export default BadgeNumber;
