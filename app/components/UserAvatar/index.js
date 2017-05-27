@@ -12,7 +12,7 @@ function UserAvatar(props) {
   return (
     <div style={{ width: 'min-content', maxWidth: '100%', margin: 'auto' }}>
       <Chip
-        style={{ margin: 'auto', maxWidth: '100%', overflow: 'hidden', width: 'available' }}
+        style={{ margin: 'auto', maxWidth: '100%', overflow: 'hidden' }}
         backgroundColor={blue50}
         labelStyle={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
       >

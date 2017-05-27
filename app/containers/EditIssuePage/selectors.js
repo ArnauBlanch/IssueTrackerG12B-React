@@ -9,7 +9,6 @@ const selectEditIssuePageDomain = () => (state) => state.get('editIssuePage');
  * Other specific selectors
  */
 
-
 /**
  * Default selector used by EditIssuePage
  */

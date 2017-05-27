@@ -62,8 +62,8 @@ export class NewIssuePage extends React.Component { // eslint-disable-line react
       if (values.get('description')) {
         newIssue.description = values.get('description');
       }
-      if (values.get('assignee') && values.get('assignee') !== 'unassigned') {
-        newIssue.assignee_id = values.get('assignee');
+      if (values.get('assignee_id') && values.get('assignee_id') !== 'unassigned') {
+        newIssue.assignee_id = values.get('assignee_id');
       }
       if (this.state.attachments.length > 0) {
         newIssue.attached_files = this.state.attachments;
@@ -74,10 +74,10 @@ export class NewIssuePage extends React.Component { // eslint-disable-line react
 
   render() {
     return (
-      <div className="mdl-cell mdl-cell--5-col">
+      <div style={{ maxWidth: 550, width: '100%', margin: 5 }}>
         <Card style={{ paddingTop: 10 }}>
           <Helmet title="Issue Tracker | Create new issue" />
-          <h3 style={{ textAlign: 'center' }}>Create issue</h3>
+          <h3 style={{ textAlign: 'center' }}>Create issue </h3>
           <IssueForm
             dispatch={this.props.dispatch}
             authUser={parseInt(this.props.authUser, 10)}

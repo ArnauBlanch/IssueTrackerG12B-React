@@ -20,7 +20,7 @@ export default function request(endpoint, method, body, withAuth) {
     throw new Error('Missing authentication');
   }
 
-  const options = { method, headers };
+  const options = { method, headers, mode: 'cors' };
   if (body) options.body = JSON.stringify(body).toString();
   return fetch(`https://issue-tracker-g12b.herokuapp.com${endpoint}`, options);
 }

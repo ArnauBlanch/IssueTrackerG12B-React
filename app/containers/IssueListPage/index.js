@@ -43,23 +43,23 @@ export class IssueListPage extends React.Component { // eslint-disable-line reac
   render() {
     const { issues } = this.props.issuesState;
     const titleWidth = { paddingLeft: 5, paddingRight: 0 };
-    const columnIconWidth = { width: 50, textAlign: 'center', paddingLeft: 0, paddingRight: 0 };
+    const columnIconWidth = { width: 45, textAlign: 'center', paddingLeft: 0, paddingRight: 0 };
     const statusWidth = { width: 80, textAlign: 'center', paddingLeft: 0, paddingRight: 0 };
-    const votesWidth = { width: 50, textAlign: 'center', paddingLeft: 0, paddingRight: 0 };
-    const assigneeWidth = { width: 230, textAlign: 'center', overflow: 'ellipsis' };
-    const dateWidth = { width: 100, textAlign: 'center', paddingLeft: 0, paddingRight: 0 };
+    const votesWidth = { width: 45, textAlign: 'center', paddingLeft: 0, paddingRight: 0 };
+    const assigneeWidth = { width: '25%', textAlign: 'center', overflow: 'ellipsis' };
+    const dateWidth = { width: 90, textAlign: 'center', paddingLeft: 0, paddingRight: 0 };
     const cardStyle = {
       margin: 10,
       maxWidth: 1000,
       paddingLeft: 10,
       paddingRight: 10,
-      marginBottom: 55,
+      marginBottom: 60,
     };
     const milisecInDay = 86400000;
     const now = new Date();
 
     return (
-      <div className="">
+      <div>
         <Helmet
           title="Issue Tracker"
           meta={[
@@ -72,7 +72,7 @@ export class IssueListPage extends React.Component { // eslint-disable-line reac
             <Table>
               <TableHeader displaySelectAll={false} adjustForCheckbox={false} style={{ paddingRight: 20 }}>
                 <TableRow>
-                  <TableHeaderColumn className="mdl-cell--6-col" style={titleWidth}>Title</TableHeaderColumn>
+                  <TableHeaderColumn style={titleWidth}>Title</TableHeaderColumn>
                   <TableHeaderColumn style={columnIconWidth}>Kind</TableHeaderColumn>
                   <TableHeaderColumn style={columnIconWidth}>Priority</TableHeaderColumn>
                   <TableHeaderColumn style={statusWidth}>Status</TableHeaderColumn>
@@ -86,7 +86,7 @@ export class IssueListPage extends React.Component { // eslint-disable-line reac
                 {
                   issues && issues.map((issue) => (
                     <TableRow key={issue.id} selectable={false}>
-                      <TableRowColumn className="mdl-cell--6-col" style={titleWidth}>
+                      <TableRowColumn style={titleWidth}>
                         <Link to={`/issues/${issue.id}`} style={{ textDecoration: 'none', fontSize: 14 }}>
                           {`#${issue.id}: ${issue.title}`}
                         </Link>

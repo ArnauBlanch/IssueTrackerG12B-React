@@ -35,13 +35,14 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
   }
 
   componentWillMount() {
+    console.log(this.props.initialValues.toJS());
     const values = this.props.initialValues;
     this.props.initialize({
       title: values.get('title'),
       description: values.get('description'),
       kind: values.get('kind'),
       priority: values.get('priority'),
-      assignee: values.get('assignee'),
+      assignee_id: values.get('assignee_id'),
     });
   }
 
@@ -99,7 +100,7 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
             </div>
         }
         <Field
-          name="assignee"
+          name="assignee_id"
           component={SelectField}
           floatingLabelText="Assignee"
           style={{ width: '100%' }}
@@ -113,7 +114,7 @@ class IssueForm extends React.Component { // eslint-disable-line react/prefer-st
             label="Assign to me"
             labelStyle={{ fontSize: '12px', fontWeight: 'bold' }}
             style={{ marginTop: -5 }}
-            onTouchTap={() => this.props.dispatch(change('issueForm', 'assignee', this.props.authUser + 1))}
+            onTouchTap={() => this.props.dispatch(change('issueForm', 'assignee_id', this.props.authUser + 1))}
           />
         </div>
         <Field
