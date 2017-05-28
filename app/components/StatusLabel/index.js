@@ -4,7 +4,7 @@
 *
 */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 
 function StatusLabel(props) {
@@ -77,7 +77,7 @@ function StatusLabel(props) {
 }
 
 StatusLabel.propTypes = {
-  status: React.PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
 };
 
 export default StatusLabel;

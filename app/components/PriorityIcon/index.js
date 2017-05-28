@@ -4,7 +4,7 @@
 *
 */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import trivial from '../../images/issue_priorities/trivial.svg';
 import minor from '../../images/issue_priorities/minor.svg';
 import major from '../../images/issue_priorities/major.svg';
@@ -38,7 +38,7 @@ function PriorityIcon(props) {
 }
 
 PriorityIcon.propTypes = {
-  priority: React.PropTypes.string.isRequired,
+  priority: PropTypes.string.isRequired,
 };
 
 export default PriorityIcon;

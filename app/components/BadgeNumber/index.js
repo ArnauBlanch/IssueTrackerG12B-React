@@ -4,7 +4,7 @@
 *
 */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { blue50, blue900 } from 'material-ui/styles/colors';
 
 
@@ -37,8 +37,8 @@ function BadgeNumber(props) {
 }
 
 BadgeNumber.propTypes = {
-  number: React.PropTypes.number.isRequired,
-  focused: React.PropTypes.bool,
+  number: PropTypes.number.isRequired,
+  focused: PropTypes.bool,
 };
 
 export default BadgeNumber;
