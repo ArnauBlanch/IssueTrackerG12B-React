@@ -23,14 +23,14 @@ const statusList = [
 class IssueDetailsHeader extends React.Component {  // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
-    this.state = { dialogOpen: false };
+    this.state = { dialogOpen: false, nextStatus: '' };
     this.handleDialogStatusOpen = this.handleDialogStatusOpen.bind(this);
     this.handleDialogStatusClose = this.handleDialogStatusClose.bind(this);
   }
 
   handleDialogStatusOpen(status) {
     if (status !== statusList.indexOf(this.props.status)) {
-      this.setState({ dialogOpen: true });
+      this.setState({ dialogOpen: true, nextStatus: statusList.indexOf(status) });
     }
   }
 
@@ -66,13 +66,14 @@ class IssueDetailsHeader extends React.Component {  // eslint-disable-line react
           </SelectField>
 
           <Dialog
-            title="Title"
+            title="Change status"
             open={this.state.dialogOpen}
             onRequestClose={() => this.handleDialogStatusClose()}
           >
             <CommentForm
               editing
               handleSubmit={() => this.handleStatusChange()}
+              onCancel={() => this.handleDialogStatusClose()}
             ></CommentForm>
           </Dialog>
 
