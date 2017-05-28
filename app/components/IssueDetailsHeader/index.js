@@ -50,19 +50,16 @@ class IssueDetailsHeader extends React.Component {  // eslint-disable-line react
 
           <SelectField
             value={statusList.indexOf(status)}
-            labelStyle={{ fontWeight: '500' }}
-            style={{ marginLeft: '10px', width: '150px' }}
+            // labelStyle={{ fontWeight: '500' }}
+            style={{ marginLeft: '10px', width: 120 }}
             floatingLabelText="Workflow"
+            menuItemStyle={{ textAlign: 'center' }}
+            labelStyle={{ textAlign: 'center', width: 140 }}
             onChange={(e, value) => this.handleDialogStatusOpen(value)}
           >
-            <MenuItem value={0} primaryText="new" />
-            <MenuItem value={1} primaryText="open" />
-            <MenuItem value={2} primaryText="on hold" />
-            <MenuItem value={3} primaryText="resolved" />
-            <MenuItem value={4} primaryText="duplicate" />
-            <MenuItem value={5} primaryText="invalid" />
-            <MenuItem value={6} primaryText="wontfix" />
-            <MenuItem value={7} primaryText="closed" />
+            { statusList.map((s, index) => (
+              <MenuItem key={index} value={index} primaryText={<StatusLabel status={s} />} />
+            ))}
           </SelectField>
 
           <Dialog
