@@ -11,6 +11,7 @@ import {
   CURRENTLY_SENDING,
   VOTE_ISSUE,
   WATCH_ISSUE,
+  DELETE_ISSUE,
 } from './constants';
 
 export function getIssueRequest(id) {
@@ -35,4 +36,8 @@ export function voteIssue(id) {
 
 export function watchIssue(id) {
   return { type: WATCH_ISSUE, id };
+}
+
+export function deleteIssue(url) {
+  return { type: DELETE_ISSUE, url };
 }

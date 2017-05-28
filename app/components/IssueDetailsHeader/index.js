@@ -5,7 +5,7 @@
 */
 
 import React, { PropTypes } from 'react';
-import { RaisedButton, SelectField, MenuItem, Dialog } from 'material-ui';
+import { RaisedButton, SelectField, MenuItem, Dialog, FlatButton } from 'material-ui';
 import StatusLabel from '../StatusLabel';
 import CommentForm from '../CommentForm';
 
@@ -23,8 +23,8 @@ const statusList = [
 class IssueDetailsHeader extends React.Component {  // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
-    this.state = { dialogOpen: false, statusToChange: undefined };
-    this.state = { dialogOpen: false, nextStatus: '' };
+    this.state = { dialogOpen: false, statusToChange: undefined, dialogDeleteOpen: false };
+    this.state = { dialogOpen: false, nextStatus: '', dialogDeleteOpen: false };
     this.handleDialogStatusOpen = this.handleDialogStatusOpen.bind(this);
     this.handleDialogStatusClose = this.handleDialogStatusClose.bind(this);
   }
@@ -41,8 +41,33 @@ class IssueDetailsHeader extends React.Component {  // eslint-disable-line react
     this.props.clearError();
   }
 
+  handleDialogDeleteOpen() {
+    this.setState({ dialogDeleteOpen: true });
+  }
+
+  handleDialogDeleteClose() {
+    this.setState({ dialogDeleteOpen: false });
+  }
+
   render() {
     const { id, status, editError } = this.props;
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary
+        onTouchTap={this.handleDialogDeleteClose}
+      />,
+      <FlatButton
+        label="Delete"
+        primary
+        keyboardFocused
+        onTouchTap={() => {
+          this.handleDialogDeleteClose();
+          this.props.onDelete();
+        }}
+      />,
+    ];
+
     return (
       <div className="mdl-grid" style={{ width: '100%' }}>
         <div className="mdl-cell mdl-cell--7-col">
@@ -103,9 +128,18 @@ class IssueDetailsHeader extends React.Component {  // eslint-disable-line react
             labelStyle={{ fontWeight: 500, color: 'white' }}
             backgroundColor="#D50000"
             style={{ minWidth: 85 }}
-            href={`/issues/${id}/edit`}
+            onTouchTap={() => this.handleDialogDeleteOpen}
           />
         </div>
+
+        <Dialog
+          title="Delete issue"
+          actions={actions}
+          open={this.state.dialogDeleteOpen}
+          onRequestClose={this.handleDialogDeleteClose}
+          modal={false}
+        >
+        </Dialog>
       </div>
     );
   }
@@ -117,6 +151,7 @@ IssueDetailsHeader.propTypes = {
   editError: PropTypes.bool.isRequired,
   clearError: PropTypes.func.isRequired,
   handleStatusChange: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default IssueDetailsHeader;
