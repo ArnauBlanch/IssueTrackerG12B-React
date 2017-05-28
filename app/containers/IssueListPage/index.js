@@ -53,7 +53,8 @@ class IssueListPage extends React.Component { // eslint-disable-line react/prefe
   }
 
   render() {
-    let { issues, currentlySending } = this.props.issuesState;
+    let { issues } = this.props.issuesState;
+    const { currentlySending } = this.props.issuesState;
     const cardStyle = {
       margin: 10,
       maxWidth: 1000,
@@ -99,7 +100,7 @@ class IssueListPage extends React.Component { // eslint-disable-line react/prefe
           <CircularProgress size={60} thickness={6} /> :
           <div>
             <div className="mdl-grid">
-              <div className="mdl-cell mdl-cell--6-col" style={{ marginLeft: '0px' }}>
+              <div className="mdl-cell mdl-cell--4-col" style={{ marginLeft: '0px', width: '195px' }}>
                 <RaisedButton
                   label="All"
                   labelStyle={{ fontWeight: 'bold' }}
@@ -112,6 +113,8 @@ class IssueListPage extends React.Component { // eslint-disable-line react/prefe
                   onTouchTap={() => this.filterOpen()}
                   primary={this.state.currentFilter === 'open'}
                 />
+              </div>
+              <div className="mdl-cell mdl-cell--4-col" style={{ marginLeft: '-12px', width: '240px' }}>
                 {
                   this.props.authState.isAuthenticated &&
                   <RaisedButton
