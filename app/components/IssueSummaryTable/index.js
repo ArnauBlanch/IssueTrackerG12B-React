@@ -94,13 +94,15 @@ class IssueSummaryTable extends React.Component { // eslint-disable-line react/p
           </div>
           <div style={rightColumnStyle}>
             <BadgeNumber number={issue.votes} focused={issue.voted_by_current_user} />
-            <a
-              style={{ marginLeft: '5px' }}
-              onClick={() => this.props.dispatch(voteIssue(issue.id))}
-              role="link"
-            >
-              {issue.voted_by_current_user ? 'Remove vote' : 'Vote for this issue'}
-            </a>
+            { this.props.isAuthenticated &&
+              <a
+                style={{ marginLeft: '5px' }}
+                onClick={() => this.props.dispatch(voteIssue(issue.id))}
+                role="link"
+              >
+                {issue.voted_by_current_user ? 'Remove vote' : 'Vote for this issue'}
+              </a>
+            }
           </div>
         </div>
 
@@ -110,6 +112,7 @@ class IssueSummaryTable extends React.Component { // eslint-disable-line react/p
           </div>
           <div style={rightColumnStyle}>
             <BadgeNumber number={issue.watchers} focused={issue.watched_by_current_user} />
+            { this.props.isAuthenticated &&
             <a
               style={{ marginLeft: '5px' }}
               onClick={() => this.props.dispatch(watchIssue(issue.id))}
@@ -117,6 +120,7 @@ class IssueSummaryTable extends React.Component { // eslint-disable-line react/p
             >
               {issue.watched_by_current_user ? 'Stop watching' : 'Watch this issue'}
             </a>
+          }
           </div>
         </div>
       </div>
@@ -127,6 +131,7 @@ class IssueSummaryTable extends React.Component { // eslint-disable-line react/p
 IssueSummaryTable.propTypes = {
   issue: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {

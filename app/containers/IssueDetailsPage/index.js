@@ -67,7 +67,7 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
                 <div
                   className="mdl-cell mdl-cell--4-col"
                 >
-                  <IssueSummaryTable issue={issue} />
+                  <IssueSummaryTable issue={issue} isAuthenticated={this.props.authState.isAuthenticated} />
                 </div>
                 <div
                   className="mdl-cell mdl-cell--8-col"
