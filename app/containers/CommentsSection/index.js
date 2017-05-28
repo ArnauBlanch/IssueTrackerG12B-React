@@ -92,8 +92,8 @@ export class CommentsSection extends React.Component { // eslint-disable-line re
               onTouchTap={() => this.askForPermissionToEdit(-1)}
             />
           )
-        )
-        }
+          )
+          }
       </div>
     );
   }

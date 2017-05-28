@@ -58,7 +58,7 @@ export function* deleteComment() {
   }
 }
 
-export function* defaultSaga() {
+export function* commentsSagas() {
   yield fork(createComment);
   yield fork(editComment);
   yield fork(deleteComment);
@@ -66,5 +66,5 @@ export function* defaultSaga() {
 
 // All sagas to be loaded
 export default [
-  defaultSaga,
+  commentsSagas,
 ];
