@@ -28,7 +28,11 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
       this.props.dispatch(getIssueRequest(this.props.params.issueID));
     }
   }
-
+/*
+  handleStatusChange() {
+    this.props.dispatch(editIssueRequest(this.props.params.issueID, editedValues));
+  }
+*/
   render() {
     const { issue, error, currentlySending } = this.props.IssueDetailsPage;
     const { issueID } = this.props.params;
