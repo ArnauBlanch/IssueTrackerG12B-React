@@ -46,16 +46,20 @@ class IssueSummaryTable extends React.Component { // eslint-disable-line react/p
 
     return (
       <div>
-        <div style={{ display: 'flex', width: '100%' }}>
-          <div style={assigneeLeftColumnStyle}>
+        <div style={issue._links.assignee ? { display: 'flex', width: '100%' } : rowStyle}>
+          <div style={issue._links.assignee ? assigneeLeftColumnStyle : leftColumnStyle}>
             Assignee
           </div>
-          <div style={{ flex: 'none', width: '173px' }}>
-            <UserAvatar name={issue._links.assignee.name} imageUrl={issue._links.assignee.image.href} />
+          <div style={issue._links.assignee ? { flex: 'none', width: '173px' } : rightColumnStyle}>
+            {
+              issue._links.assignee ?
+                <UserAvatar name={issue._links.assignee.name} imageUrl={issue._links.assignee.image.href} /> :
+                <i style={{ color: '#767' }}>Not assigned.</i>
+            }
           </div>
         </div>
 
-        <div style={{ height: '28px', display: 'flex', width: '100%', marginTop: 5 }}>
+        <div style={issue._links.assignee ? { height: '28px', display: 'flex', width: '100%', marginTop: 5 } : rowStyle}>
           <div style={leftColumnStyle}>
             Type
           </div>
