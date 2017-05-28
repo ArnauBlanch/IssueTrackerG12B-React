@@ -29,7 +29,11 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
       this.props.dispatch(getIssueRequest(this.props.params.issueID));
     }
   }
-
+/*
+  handleStatusChange() {
+    this.props.dispatch(editIssueRequest(this.props.params.issueID, editedValues));
+  }
+*/
   render() {
     const { issue, error, currentlySending } = this.props.IssueDetailsPage;
     const { issueID } = this.props.params;
@@ -68,7 +72,7 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
                 <div
                   className="mdl-cell mdl-cell--4-col"
                 >
-                  <IssueSummaryTable issue={issue} />
+                  <IssueSummaryTable issue={issue} isAuthenticated={this.props.authState.isAuthenticated} />
                 </div>
                 <div
                   className="mdl-cell mdl-cell--8-col"
