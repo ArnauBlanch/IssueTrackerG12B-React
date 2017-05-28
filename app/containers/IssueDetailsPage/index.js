@@ -15,6 +15,7 @@ import CommentsSection from '../CommentsSection';
 import makeSelectIssueDetailsPage from './selectors';
 import IssueDetailsHeader from '../../components/IssueDetailsHeader';
 import IssueSummaryTable from '../../components/IssueSummaryTable';
+import IssueDetailsMain from '../../components/IssueDetailsMain';
 
 
 export class IssueDetailsPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -59,11 +60,8 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
                   <IssueDetailsHeader id={issue.id} status={issue.status} />
                 </div>
 
-                <div
-                  className="mdl-cell mdl-cell--8-col"
-                  style={{ backgroundColor: 'red' }}
-                >
-                  Title + description + creator + creation date + attachments
+                <div className="mdl-cell mdl-cell--8-col">
+                  <IssueDetailsMain issue={issue} />
                 </div>
 
                 <div

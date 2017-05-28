@@ -30,7 +30,7 @@ class IssueDetailsHeader extends React.Component {  // eslint-disable-line react
 
     return (
       <div>
-        <b style={{ marginRight: '10px', fontSize: '20px' }}>Issue #{id}</b>
+        <b style={{ marginRight: '10px', fontSize: '15px' }}>Issue #{id}</b>
         <StatusLabel status={status} />
         <div style={{ float: 'right' }}>
 
