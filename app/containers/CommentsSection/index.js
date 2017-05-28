@@ -6,7 +6,7 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { FlatButton } from 'material-ui';
+import { RaisedButton } from 'material-ui';
 import { createStructuredSelector } from 'reselect';
 import makeSelectCommentsSection from './selectors';
 import IssueComment from '../../components/IssueComment';
@@ -75,22 +75,24 @@ export class CommentsSection extends React.Component { // eslint-disable-line re
             />
           ))}
         </div>
-        { isAuthenticated && ((typeof this.state.editingComment !== 'undefined' &&
-        this.state.editingComment === -1) || sendingComment || createError) ?
-          <CommentForm
-            form="createComment"
-            onSubmit={this.handleCreate}
-            onCancel={this.cancelCreateComment}
-            commentError={createError}
-            commentEmpty={this.state.commentEmpty}
-          />
+        { isAuthenticated && (
+          ((typeof this.state.editingComment !== 'undefined' &&
+          this.state.editingComment === -1) || sendingComment || createError) ?
+            <CommentForm
+              form="createComment"
+              onSubmit={this.handleCreate}
+              onCancel={this.cancelCreateComment}
+              commentError={createError}
+              commentEmpty={this.state.commentEmpty}
+            />
           : (
-            <FlatButton
+            <RaisedButton
               label="New comment"
               primary
               onTouchTap={() => this.askForPermissionToEdit(-1)}
             />
           )
+        )
         }
       </div>
     );

@@ -100,7 +100,7 @@ export class EditIssuePage extends React.Component { // eslint-disable-line reac
         { fetchingIssue || !issue || issue.id !== parseInt(issueID, 10) ?
           <CircularProgress size={60} thickness={6} />
           : <Card style={{ paddingTop: 10 }}>
-            <Helmet title="Issue Tracker | Edit [...]" />
+            <Helmet title={`Issue Tracker | Editing: ${issue.title}`} />
             <h3 style={{ textAlign: 'center' }}>Edit issue</h3>
             <IssueForm
               dispatch={this.props.dispatch}

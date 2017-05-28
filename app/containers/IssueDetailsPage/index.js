@@ -63,7 +63,7 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
             </div>
           : issue && <div>
             <Helmet
-              title={`Issue Tracker | ${'hello'}`}
+              title={`Issue Tracker | ${issue.title}`}
               meta={[
                 { name: 'description', content: 'Description of IssueDetailsPage' },
               ]}
