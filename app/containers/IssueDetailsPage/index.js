@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { CircularProgress, Card } from 'material-ui';
 import { createStructuredSelector } from 'reselect';
-import { getIssueRequest } from './actions';
+import { getIssueRequest, deleteIssue } from './actions';
 import { makeSelectAuthState } from '../IssueListPage/selectors';
 import CommentsSection from '../CommentsSection';
 import makeSelectIssueDetailsPage from './selectors';
@@ -83,6 +83,7 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
                   editError={editError}
                   clearError={this.clearError}
                   handleStatusChange={this.changeStatus}
+                  onDelete={() => this.props.dispatch(deleteIssue(issue._links.self.href))}
                 />
 
                 <div className="mdl-cell mdl-cell--8-col">
