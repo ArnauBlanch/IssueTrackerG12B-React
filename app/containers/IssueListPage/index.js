@@ -114,9 +114,9 @@ class IssueListPage extends React.Component { // eslint-disable-line react/prefe
                   primary={this.state.currentFilter === 'open'}
                 />
               </div>
-              <div className="mdl-cell mdl-cell--4-col" style={{ marginLeft: '-12px', width: '240px' }}>
-                {
-                  this.props.authState.isAuthenticated &&
+              {
+                this.props.authState.isAuthenticated &&
+                <div className="mdl-cell mdl-cell--4-col" style={{ marginLeft: '-12px', width: '240px' }}>
                   <RaisedButton
                     label="My issues"
                     style={{ marginLeft: '15px' }}
@@ -124,9 +124,6 @@ class IssueListPage extends React.Component { // eslint-disable-line react/prefe
                     onTouchTap={() => this.filterMyIssues()}
                     primary={this.state.currentFilter === 'my_issues'}
                   />
-                }
-                {
-                  this.props.authState.isAuthenticated &&
                   <RaisedButton
                     label="Watching"
                     style={{ marginLeft: '15px' }}
@@ -134,8 +131,8 @@ class IssueListPage extends React.Component { // eslint-disable-line react/prefe
                     onTouchTap={() => this.filterWatching()}
                     primary={this.state.currentFilter === 'watching'}
                   />
-                }
-              </div>
+                </div>
+              }
             </div>
             <Card style={cardStyle}>
               <IssuesTable issues={issues} />
