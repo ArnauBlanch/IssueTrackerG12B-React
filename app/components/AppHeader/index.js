@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { AppBar, SelectField, MenuItem } from 'material-ui';
 import { blue900 } from 'material-ui/styles/colors';
@@ -50,9 +50,9 @@ class AppHeader extends React.Component { // eslint-disable-line
   }
 }
 AppHeader.propTypes = {
-  authUser: React.PropTypes.number,
-  isAuthenticated: React.PropTypes.bool.isRequired,
-  handleAuthChange: React.PropTypes.func.isRequired,
+  authUser: PropTypes.number,
+  isAuthenticated: PropTypes.bool.isRequired,
+  handleAuthChange: PropTypes.func.isRequired,
 };
 
 export default AppHeader;
