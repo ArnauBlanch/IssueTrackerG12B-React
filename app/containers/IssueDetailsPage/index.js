@@ -16,9 +16,16 @@ import makeSelectIssueDetailsPage from './selectors';
 import IssueDetailsHeader from '../../components/IssueDetailsHeader';
 import IssueSummaryTable from '../../components/IssueSummaryTable';
 import IssueDetailsMain from '../../components/IssueDetailsMain';
+import makeSelectEditIssuePage from '../EditIssuePage/selectors';
+import { clearError, editIssueRequest } from '../EditIssuePage/actions';
 
 
 export class IssueDetailsPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  constructor(props) {
+    super(props);
+    this.clearError = this.clearError.bind(this);
+    this.changeStatus = this.changeStatus.bind(this);
+  }
 
   componentWillMount() {
     this.props.dispatch(getIssueRequest(this.props.params.issueID));
@@ -29,15 +36,24 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
       this.props.dispatch(getIssueRequest(this.props.params.issueID));
     }
   }
-/*
-  handleStatusChange() {
-    this.props.dispatch(editIssueRequest(this.props.params.issueID, editedValues));
+
+  clearError() {
+    this.props.dispatch(clearError());
   }
-*/
+
+  changeStatus(status, comment) {
+    const values = { status };
+    if (comment) {
+      values.comment = comment;
+    }
+    this.props.dispatch(editIssueRequest(this.props.params.issueID, values));
+  }
+
   render() {
     const { issue, error, currentlySending } = this.props.IssueDetailsPage;
     const { issueID } = this.props.params;
     const { isAuthenticated } = this.props.authState;
+    const editError = typeof this.props.EditIssuePage.error !== 'undefined';
     return (
       <div className="mdl-cell mdl-cell--9-col mdl-cell--9-tablet">
         { (currentlySending && (!issue || issue.id !== parseInt(issueID, 10)))
@@ -61,9 +77,13 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
             >
               <div className="mdl-grid">
 
-                <div className="mdl-cell mdl-cell--12-col">
-                  <IssueDetailsHeader id={issue.id} status={issue.status} />
-                </div>
+                <IssueDetailsHeader
+                  id={issue.id}
+                  status={issue.status}
+                  editError={editError}
+                  clearError={this.clearError}
+                  handleStatusChange={this.changeStatus}
+                />
 
                 <div className="mdl-cell mdl-cell--8-col">
                   <IssueDetailsMain issue={issue} />
@@ -93,6 +113,7 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
 
 IssueDetailsPage.propTypes = {
   IssueDetailsPage: PropTypes.object.isRequired,
+  EditIssuePage: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   params: PropTypes.object.isRequired,
   authState: PropTypes.object.isRequired,
@@ -100,6 +121,7 @@ IssueDetailsPage.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   IssueDetailsPage: makeSelectIssueDetailsPage(),
+  EditIssuePage: makeSelectEditIssuePage(),
   authState: makeSelectAuthState(),
 });
 

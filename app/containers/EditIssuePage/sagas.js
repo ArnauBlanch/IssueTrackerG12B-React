@@ -3,6 +3,7 @@ import { push } from 'react-router-redux';
 import { getUsersSuccess, editIssueSuccess, editIssueFailure } from './actions';
 import { GET_USERS_REQUEST, EDIT_ISSUE_REQUEST } from './constants';
 import request from '../../utils/request';
+import { getIssueRequest } from '../IssueDetailsPage/actions';
 
 export function* getUsers() {
   while (true) { // eslint-disable-line
@@ -24,7 +25,13 @@ export function* editIssue() {
       const response = yield call(request, `/issues/${issueID}`, 'PATCH', newValues, true);
       if (response.status === 200) {
         yield put(editIssueSuccess());
-        yield put(push(`/issues/${issueID}`));
+        if (Object.keys(newValues).length < 3 &&
+        (Object.keys(newValues).indexOf('status') !== -1 ||
+        Object.keys(newValues).indexOf('attached_files') !== -1)) {
+          yield put(getIssueRequest(issueID));
+        } else {
+          yield put(push(`/issues/${issueID}`));
+        }
       } else {
         const responseBody = yield response.json();
         yield put(editIssueFailure(responseBody.error));

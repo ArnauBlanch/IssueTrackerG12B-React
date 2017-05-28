@@ -18,12 +18,16 @@ class CommentForm extends React.Component { // eslint-disable-line react/prefer-
   }
 
   render() {
-    const { commentError, commentEmpty } = this.props;
+    const { commentError, commentEmpty, statusError } = this.props;
     return (
       <form
         onSubmit={this.props.handleSubmit}
       >
-
+        { typeof commentError === 'undefined' &&
+          <div style={{ fontSize: '12px', color: 'rgba(0, 0, 0, 0.3)' }}>
+            Comment
+          </div>
+        }
         <Field
           name="comment"
           component={Wysiwyg}
@@ -31,6 +35,7 @@ class CommentForm extends React.Component { // eslint-disable-line react/prefer-
         />
         { commentError && <span style={{ color: 'red' }}>{'There was an error when sending the comment'}<br /></span> }
         { commentEmpty && <span style={{ color: 'red' }}>{'The comment can\'t be blank'}<br /></span> }
+        { statusError && <span style={{ color: 'red' }}>{'There was an error when changing the status'}<br /></span> }
         <RaisedButton
           label={this.props.editing ? 'Edit' : 'Comment'}
           type="submit"
@@ -51,7 +56,8 @@ class CommentForm extends React.Component { // eslint-disable-line react/prefer-
 CommentForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  commentError: PropTypes.bool.isRequired,
+  commentError: PropTypes.bool,
+  statusError: PropTypes.bool,
   commentEmpty: PropTypes.bool,
   initialize: PropTypes.func.isRequired,
   initialBody: PropTypes.string,

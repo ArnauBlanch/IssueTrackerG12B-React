@@ -10,6 +10,7 @@ import {
   EDIT_ISSUE_REQUEST,
   EDIT_ISSUE_SUCCESS,
   EDIT_ISSUE_FAILURE,
+  CLEAR_ERROR,
 } from './constants';
 
 export function getUsersRequest() {
@@ -30,4 +31,8 @@ export function editIssueSuccess() {
 
 export function editIssueFailure(error) {
   return { type: EDIT_ISSUE_FAILURE, error };
+}
+
+export function clearError() {
+  return { type: CLEAR_ERROR };
 }
