@@ -9,6 +9,7 @@ import {
   GET_USERS_SUCCESS,
   EDIT_ISSUE_SUCCESS,
   EDIT_ISSUE_FAILURE,
+  CLEAR_ERROR,
 } from './constants';
 
 const initialState = fromJS({
@@ -24,6 +25,8 @@ function editIssuePageReducer(state = initialState, action) {
       return state.set('error', undefined);
     case EDIT_ISSUE_FAILURE:
       return state.set('error', action.error);
+    case CLEAR_ERROR:
+      return state.set('error', undefined);
     default:
       return state;
   }

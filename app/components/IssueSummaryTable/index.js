@@ -46,18 +46,16 @@ class IssueSummaryTable extends React.Component { // eslint-disable-line react/p
 
     return (
       <div>
-        <div style={issue._links.assignee ? { display: 'flex', width: '100%' } : rowStyle}>
-          <div style={issue._links.assignee ? assigneeLeftColumnStyle : leftColumnStyle}>
-            Assignee
+        { issue._links.assignee &&
+          <div style={issue._links.assignee ? { display: 'flex', width: '100%' } : rowStyle}>
+            <div style={issue._links.assignee ? assigneeLeftColumnStyle : leftColumnStyle}>
+              Assignee
+            </div>
+            <div style={issue._links.assignee ? { flex: 'none', width: '173px' } : rightColumnStyle}>
+              <UserAvatar name={issue._links.assignee.name} imageUrl={issue._links.assignee.image.href} />
+            </div>
           </div>
-          <div style={issue._links.assignee ? { flex: 'none', width: '173px' } : rightColumnStyle}>
-            {
-              issue._links.assignee ?
-                <UserAvatar name={issue._links.assignee.name} imageUrl={issue._links.assignee.image.href} /> :
-                <i style={{ color: '#767' }}>Not assigned.</i>
-            }
-          </div>
-        </div>
+        }
 
         <div style={issue._links.assignee ? { height: '28px', display: 'flex', width: '100%', marginTop: 5 } : rowStyle}>
           <div style={leftColumnStyle}>
@@ -95,8 +93,8 @@ class IssueSummaryTable extends React.Component { // eslint-disable-line react/p
           <div style={rightColumnStyle}>
             <BadgeNumber number={issue.votes} focused={issue.voted_by_current_user} />
             { this.props.isAuthenticated &&
-              <a
-                style={{ marginLeft: '5px' }}
+              <a // eslint-disable-line
+                style={{ marginLeft: 10 }}
                 onClick={() => this.props.dispatch(voteIssue(issue.id))}
                 role="link"
               >
@@ -113,14 +111,14 @@ class IssueSummaryTable extends React.Component { // eslint-disable-line react/p
           <div style={rightColumnStyle}>
             <BadgeNumber number={issue.watchers} focused={issue.watched_by_current_user} />
             { this.props.isAuthenticated &&
-            <a
-              style={{ marginLeft: '5px' }}
-              onClick={() => this.props.dispatch(watchIssue(issue.id))}
-              role="link"
-            >
-              {issue.watched_by_current_user ? 'Stop watching' : 'Watch this issue'}
-            </a>
-          }
+              <a // eslint-disable-line
+                style={{ marginLeft: 10 }}
+                onClick={() => this.props.dispatch(watchIssue(issue.id))}
+                role="link"
+              >
+                {issue.watched_by_current_user ? 'Stop watching' : 'Watch this issue'}
+              </a>
+            }
           </div>
         </div>
       </div>
