@@ -27,7 +27,7 @@ module.exports = require('./webpack.base.babel')({
     // Minify and optimize the index.html
     new HtmlWebpackPlugin({
       template: 'app/index.html',
-      /* minify: {
+      minify: {
         removeComments: true,
         collapseWhitespace: true,
         removeRedundantAttributes: true,
@@ -38,7 +38,7 @@ module.exports = require('./webpack.base.babel')({
         minifyJS: true,
         minifyCSS: true,
         minifyURLs: true,
-      }, */
+      },
       inject: true,
     }),
 
