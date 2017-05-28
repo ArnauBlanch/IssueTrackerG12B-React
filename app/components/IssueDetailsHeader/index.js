@@ -15,7 +15,7 @@ const statusList = [
   'on_hold',
   'resolved',
   'duplicate',
-  'invalid',
+  'invalid_issue',
   'wontfix',
   'closed',
 ];
@@ -24,6 +24,7 @@ class IssueDetailsHeader extends React.Component {  // eslint-disable-line react
   constructor(props) {
     super(props);
     this.state = { dialogOpen: false, statusToChange: undefined };
+    this.state = { dialogOpen: false, nextStatus: '' };
     this.handleDialogStatusOpen = this.handleDialogStatusOpen.bind(this);
     this.handleDialogStatusClose = this.handleDialogStatusClose.bind(this);
   }
@@ -31,6 +32,7 @@ class IssueDetailsHeader extends React.Component {  // eslint-disable-line react
   handleDialogStatusOpen(status) {
     if (status !== statusList.indexOf(this.props.status)) {
       this.setState({ dialogOpen: true, statusToChange: statusList[status] });
+      this.setState({ dialogOpen: true, nextStatus: statusList.indexOf(status) });
     }
   }
 
