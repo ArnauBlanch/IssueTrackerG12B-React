@@ -4,7 +4,7 @@
 *
 */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import bug from '../../images/issue_kinds/bug.svg';
 import proposal from '../../images/issue_kinds/suggestion.svg';
 import enhancement from '../../images/issue_kinds/improvement.svg';
@@ -34,7 +34,7 @@ function KindIcon(props) {
 }
 
 KindIcon.propTypes = {
-  kind: React.PropTypes.string.isRequired,
+  kind: PropTypes.string.isRequired,
 };
 
 export default KindIcon;
