@@ -15,7 +15,7 @@ const statusList = [
   'on_hold',
   'resolved',
   'duplicate',
-  'invalid',
+  'invalid_issue',
   'wontfix',
   'closed',
 ];
