@@ -19,6 +19,7 @@ import IssueDetailsMain from '../../components/IssueDetailsMain';
 
 
 export class IssueDetailsPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
   componentWillMount() {
     this.props.dispatch(getIssueRequest(this.props.params.issueID));
   }

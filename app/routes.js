@@ -31,7 +31,7 @@ export default function createRoutes(store) {
 
         importModules.then(([reducer, sagas, component]) => {
           injectReducer('issueListPage', reducer.default);
-          injectSagas(sagas.default);
+          injectSagas('issueListPage', sagas.default);
           renderRoute(component);
         });
 
@@ -52,7 +52,7 @@ export default function createRoutes(store) {
 
         importModules.then(([reducer, sagas, component]) => {
           injectReducer('newIssuePage', reducer.default);
-          injectSagas(sagas.default);
+          injectSagas('newIssuePage', sagas.default);
           renderRoute(component);
         });
 
@@ -74,10 +74,10 @@ export default function createRoutes(store) {
         const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, sagas, component, reducer2, sagas2]) => {
-          injectReducer('editIssuePage', reducer.default);
-          injectSagas(sagas.default);
           injectReducer('issueDetailsPage', reducer2.default);
-          injectSagas(sagas2.default);
+          injectSagas('issueDetailsPage', sagas2.default);
+          injectReducer('editIssuePage', reducer.default);
+          injectSagas('editIssuePage', sagas.default);
           renderRoute(component);
         });
 
@@ -97,11 +97,11 @@ export default function createRoutes(store) {
 
         const renderRoute = loadModule(cb);
 
-        importModules.then(([reducer, sagas, component, cReducer, cSagas]) => {
+        importModules.then(([reducer, sagas, component, reducer2, sagas2]) => {
+          injectReducer('comments', reducer2.default);
+          injectSagas('comments', sagas2.default);
           injectReducer('issueDetailsPage', reducer.default);
-          injectSagas(sagas.default);
-          injectReducer('commentsSection', cReducer.default);
-          injectSagas(cSagas.default);
+          injectSagas('issueDetailsPage', sagas.default);
           renderRoute(component);
         });
 

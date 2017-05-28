@@ -27,7 +27,7 @@ class IssueListPage extends React.Component { // eslint-disable-line react/prefe
   }
 
   render() {
-    const { issues } = this.props.issuesState;
+    const { issues, currentlySending } = this.props.issuesState;
     const cardStyle = {
       margin: 10,
       maxWidth: 1000,
@@ -44,7 +44,7 @@ class IssueListPage extends React.Component { // eslint-disable-line react/prefe
             { name: 'description', content: 'Issue Tracker - ASW' },
           ]}
         />
-        { this.props.issuesState.currentlySending ?
+        { currentlySending || !issues ?
           <CircularProgress size={60} thickness={6} />
           : <Card style={cardStyle}>
             <IssuesTable issues={issues} />

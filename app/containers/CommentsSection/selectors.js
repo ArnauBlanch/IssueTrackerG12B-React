@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the commentsSection state domain
  */
-const selectCommentsSectionDomain = () => (state) => state.get('commentsSection');
+const selectCommentsSectionDomain = () => (state) => state.get('comments');
 
 /**
  * Other specific selectors
