@@ -78,7 +78,7 @@ class IssueListPage extends React.Component { // eslint-disable-line react/prefe
       return issue.watched_by_current_user === true;
     }
 
-    if (!currentlySending) {
+    if (!currentlySending && issues) {
       if (this.state.currentFilter === 'open') {
         issues = issues.filter(openIssues);
       } else if (this.state.currentFilter === 'my_issues') {
