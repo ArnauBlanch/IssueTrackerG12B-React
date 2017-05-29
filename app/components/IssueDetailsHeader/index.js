@@ -109,12 +109,6 @@ class IssueDetailsHeader extends React.Component {  // eslint-disable-line react
         { this.props.isAuthenticated &&
           <div className="mdl-cell mdl-cell--5-col" style={{ textAlign: 'center', height: 'calc(100% - 40px)' }}>
             <RaisedButton
-              label="Attach"
-              labelStyle={{ fontWeight: 500 }}
-              style={{ minWidth: 80, margin: 5 }}
-              href="/"
-            />
-            <RaisedButton
               label="Edit"
               primary
               labelStyle={{ fontWeight: 500 }}
@@ -152,7 +146,7 @@ IssueDetailsHeader.propTypes = {
   clearError: PropTypes.func.isRequired,
   handleStatusChange: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default IssueDetailsHeader;

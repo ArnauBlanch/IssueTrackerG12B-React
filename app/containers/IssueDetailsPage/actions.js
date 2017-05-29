@@ -12,6 +12,7 @@ import {
   VOTE_ISSUE,
   WATCH_ISSUE,
   DELETE_ISSUE,
+  DELETE_ATTACHED_FILE,
 } from './constants';
 
 export function getIssueRequest(id) {
@@ -40,4 +41,8 @@ export function watchIssue(id) {
 
 export function deleteIssue(url) {
   return { type: DELETE_ISSUE, url };
+}
+
+export function deleteAttachedFile(url, id) {
+  return { type: DELETE_ATTACHED_FILE, url, id };
 }

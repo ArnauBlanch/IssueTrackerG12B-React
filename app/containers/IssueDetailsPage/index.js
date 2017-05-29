@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { CircularProgress, Card } from 'material-ui';
 import { createStructuredSelector } from 'reselect';
-import { getIssueRequest, deleteIssue } from './actions';
+import { getIssueRequest, deleteIssue, deleteAttachedFile } from './actions';
 import { makeSelectAuthState } from '../IssueListPage/selectors';
 import CommentsSection from '../CommentsSection';
 import makeSelectIssueDetailsPage from './selectors';
@@ -86,7 +86,10 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
               />
               <div className="mdl-grid">
                 <div className="mdl-cell mdl-cell--8-col">
-                  <IssueDetailsMain issue={issue} />
+                  <IssueDetailsMain
+                    issue={issue}
+                    handleDeleteAttachedFile={(fileURL, idIssue) => this.props.dispatch(deleteAttachedFile(fileURL, idIssue))}
+                  />
                 </div>
 
                 <div
