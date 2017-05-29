@@ -37,6 +37,7 @@ class IssueRow extends React.Component { // eslint-disable-line react/prefer-sta
         <TableRowColumn style={assigneeStyle} className="mdl-cell--hide-phone mdl-cell--hide-tablet">
           { issue._links.assignee &&
             <UserAvatar
+              centered
               name={issue._links.assignee.name}
               imageUrl={issue._links.assignee.image ? issue._links.assignee.image.href : null}
             />

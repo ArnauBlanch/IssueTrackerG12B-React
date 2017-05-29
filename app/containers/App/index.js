@@ -45,8 +45,8 @@ class App extends React.Component {
           className="mdl-grid"
           style={{
             justifyContent: 'center',
-            display: 'flex',
-            alignItems: 'center',
+            // display: 'flex',
+            // alignItems: 'center',
             paddingTop: 74,
             minHeight: 'min-content',
             height: '100vh',
