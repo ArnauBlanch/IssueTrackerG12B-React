@@ -75,22 +75,22 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
             <Card
               style={{ marginBottom: 60 }}
             >
+              <IssueDetailsHeader
+                id={issue.id}
+                status={issue.status}
+                editError={editError}
+                clearError={this.clearError}
+                handleStatusChange={this.changeStatus}
+              />
               <div className="mdl-grid">
 
-                <IssueDetailsHeader
-                  id={issue.id}
-                  status={issue.status}
-                  editError={editError}
-                  clearError={this.clearError}
-                  handleStatusChange={this.changeStatus}
-                />
-
-                <div className="mdl-cell mdl-cell--8-col">
+                <div className="mdl-cell mdl-cell--8-col" style={{ display: 'flex', alignItems: 'left' }}>
                   <IssueDetailsMain issue={issue} />
                 </div>
 
                 <div
                   className="mdl-cell mdl-cell--4-col"
+                  style={{ display: 'flex', alignItems: 'left' }}
                 >
                   <IssueSummaryTable issue={issue} isAuthenticated={this.props.authState.isAuthenticated} />
                 </div>

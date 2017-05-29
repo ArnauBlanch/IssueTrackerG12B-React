@@ -45,10 +45,10 @@ class IssueDetailsHeader extends React.Component {  // eslint-disable-line react
     const { id, status, editError } = this.props;
     return (
       <div className="mdl-grid" style={{ width: '100%' }}>
-        <div className="mdl-cell mdl-cell--7-col">
-          <h4 style={{ display: 'flex', alignItems: 'center' }}>Issue #{id}&nbsp;&nbsp;<StatusLabel status={status} /></h4>
+        <div className="mdl-cell mdl-cell--5-col">
+          <h4 style={{ marginTop: 0, marginBottom: -8 }}>Issue #{id}&nbsp;&nbsp;<StatusLabel status={status} /></h4>
         </div>
-        <div className="mdl-cell mdl-cell--2-col" style={{ display: 'flex', alignItems: 'center' }}>
+        <div className="mdl-cell mdl-cell--2-col mdl-cell--12-col-phone" style={{ textAlign: 'center', marginTop: -5, height: 60 }}>
           <SelectField
             value={statusList.indexOf(status)}
             style={{ marginLeft: '10px', width: 120 }}
@@ -80,30 +80,26 @@ class IssueDetailsHeader extends React.Component {  // eslint-disable-line react
             ></CommentForm>
           </Dialog>
         </div>
-        <div className="mdl-cell mdl-cell--1-col mdl-cell--4-col--phone" style={{ display: 'flex', alignItems: 'center' }}>
+        <div className="mdl-cell mdl-cell--5-col" style={{ textAlign: 'center', height: 'calc(100% - 40px)' }}>
           <RaisedButton
             label="Attach"
             labelStyle={{ fontWeight: 500 }}
-            style={{ minWidth: 85 }}
+            style={{ minWidth: 80, margin: 5 }}
+            href="/"
           />
-        </div>
-
-        <div className="mdl-cell mdl-cell--1-col mdl-cell--4-col--phone" style={{ display: 'flex', alignItems: 'center' }}>
           <RaisedButton
             label="Edit"
             primary
             labelStyle={{ fontWeight: 500 }}
-            style={{ minWidth: 85 }}
+            style={{ minWidth: 80, margin: 5 }}
             href={`/issues/${id}/edit`}
           />
-        </div>
-        <div className="mdl-cell mdl-cell--1-col mdl-cell--4-col--phone" style={{ display: 'flex', alignItems: 'center' }}>
           <RaisedButton
             label="Delete"
             labelStyle={{ fontWeight: 500, color: 'white' }}
             backgroundColor="#D50000"
-            style={{ minWidth: 85 }}
-            href={`/issues/${id}/edit`}
+            style={{ minWidth: 80, margin: 5 }}
+            href="/"
           />
         </div>
       </div>

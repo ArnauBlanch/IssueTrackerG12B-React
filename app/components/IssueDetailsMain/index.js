@@ -5,9 +5,9 @@
 */
 
 import React, { PropTypes } from 'react';
-import { CardHeader } from 'material-ui';
+import { CardHeader, Chip } from 'material-ui';
 import { FormattedRelative } from 'react-intl';
-
+import { blue100 as blue } from 'material-ui/styles/colors';
 
 class IssueDetailsMain extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -15,7 +15,7 @@ class IssueDetailsMain extends React.Component { // eslint-disable-line react/pr
 
     return (
       <div>
-        <h5 style={{ width: '100%' }}>{issue.title}</h5>
+        <h5 style={{ width: '100%', marginTop: 0 }}>{issue.title}</h5>
 
         <CardHeader
           title={<span>
@@ -36,8 +36,24 @@ class IssueDetailsMain extends React.Component { // eslint-disable-line react/pr
 
         {
           issue.description ?
-          <div style={{ marginLeft: '16px' }} dangerouslySetInnerHTML={{ __html: issue.description }} /> // eslint-disable-line
+            <div style={{ marginLeft: '16px' }} dangerouslySetInnerHTML={{ __html: issue.description }} /> // eslint-disable-line
           : <i style={{ marginLeft: '16px' }}>No description provided.</i>
+        }
+        { issue._embedded.attached_files &&
+          <div style={{ textAlign: 'left' }}>
+            <h6>Attached files</h6>
+            { issue._embedded.attached_files.map((f) => (
+              <Chip
+                key={f.name}
+                style={{ marginTop: 10 }}
+                backgroundColor={blue}
+                onRequestDelete={() => console.log('delete!')}
+              >
+                <a href={f._links.url} target="_blank"><b>{f.name}</b></a>
+              </Chip>
+            ))
+            }
+          </div>
         }
       </div>
     );

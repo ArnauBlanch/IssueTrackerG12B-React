@@ -38,7 +38,7 @@ class DropzoneInput extends React.Component { // eslint-disable-line
                 key={f.name}
                 style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }}
                 backgroundColor={blue}
-                onRequestDelete={() => console.log('delete!')}
+                // onRequestDelete={() => console.log('delete!')}
               >
                 <a href={f._links.url} target="_blank"><b>{f.name}</b></a>
               </Chip>

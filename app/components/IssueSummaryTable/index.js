@@ -17,80 +17,71 @@ import BadgeNumber from '../BadgeNumber';
 class IssueSummaryTable extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     const issue = this.props.issue;
-    const assigneeLeftColumnStyle = {
-      paddingTop: '5px',
-      flex: 'none',
-      width: '120px',
-      fontWeight: 'bold',
-      textAlign: 'right',
-      paddingRight: '15px',
-    };
     const leftColumnStyle = {
       paddingTop: '3px',
-      flex: 'none',
-      width: '120px',
       fontWeight: 'bold',
       textAlign: 'right',
       paddingRight: '15px',
     };
     const rightColumnStyle = {
       paddingTop: '3px',
-      flex: 'none',
-      width: '173px',
+      width: '100%',
+      maxWidth: 0,
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+      textOverflow: 'ellipsis',
     };
     const rowStyle = {
       height: '28px',
-      display: 'flex',
       width: '100%',
     };
 
     return (
-      <div>
+      <table style={{ width: '100%' }}>
         { issue._links.assignee &&
-          <div style={issue._links.assignee ? { display: 'flex', width: '100%' } : rowStyle}>
-            <div style={issue._links.assignee ? assigneeLeftColumnStyle : leftColumnStyle}>
+          <tr style={rowStyle}>
+            <td style={leftColumnStyle}>
               Assignee
-            </div>
-            <div style={issue._links.assignee ? { flex: 'none', width: '173px' } : rightColumnStyle}>
+            </td>
+            <td style={rightColumnStyle}>
               <UserAvatar name={issue._links.assignee.name} imageUrl={issue._links.assignee.image.href} />
-            </div>
-          </div>
+            </td>
+          </tr>
         }
 
-        <div style={issue._links.assignee ? { height: '28px', display: 'flex', width: '100%', marginTop: 5 } : rowStyle}>
-          <div style={leftColumnStyle}>
+        <tr style={rowStyle}>
+          <td style={leftColumnStyle}>
             Type
-          </div>
-          <div style={rightColumnStyle}>
+          </td>
+          <td style={rightColumnStyle}>
             <KindIcon kind={issue.kind} />
             <span style={{ marginLeft: 5 }}>{issue.kind}</span>
-          </div>
-        </div>
-
-        <div style={rowStyle}>
-          <div style={leftColumnStyle}>
+          </td>
+        </tr>
+        <tr style={rowStyle}>
+          <td style={leftColumnStyle}>
             Priority
-          </div>
-          <div style={rightColumnStyle}>
+          </td>
+          <td style={rightColumnStyle}>
             <PriorityIcon priority={issue.priority} />
             <span style={{ marginLeft: 5 }}>{issue.priority}</span>
-          </div>
-        </div>
+          </td>
+        </tr>
 
-        <div style={rowStyle}>
-          <div style={leftColumnStyle}>
+        <tr style={rowStyle}>
+          <td style={leftColumnStyle}>
             Status
-          </div>
-          <div style={rightColumnStyle}>
+          </td>
+          <td style={rightColumnStyle}>
             <StatusLabel status={issue.status} />
-          </div>
-        </div>
+          </td>
+        </tr>
 
-        <div style={rowStyle}>
-          <div style={leftColumnStyle}>
+        <tr style={rowStyle}>
+          <td style={leftColumnStyle}>
             Votes
-          </div>
-          <div style={rightColumnStyle}>
+          </td>
+          <td style={rightColumnStyle}>
             <BadgeNumber number={issue.votes} focused={issue.voted_by_current_user} />
             { this.props.isAuthenticated &&
               <a // eslint-disable-line
@@ -101,14 +92,14 @@ class IssueSummaryTable extends React.Component { // eslint-disable-line react/p
                 {issue.voted_by_current_user ? 'Remove vote' : 'Vote for this issue'}
               </a>
             }
-          </div>
-        </div>
+          </td>
+        </tr>
 
-        <div style={rowStyle}>
-          <div style={leftColumnStyle}>
+        <tr style={rowStyle}>
+          <td style={leftColumnStyle}>
             Watchers
-          </div>
-          <div style={rightColumnStyle}>
+          </td>
+          <td style={rightColumnStyle}>
             <BadgeNumber number={issue.watchers} focused={issue.watched_by_current_user} />
             { this.props.isAuthenticated &&
               <a // eslint-disable-line
@@ -119,9 +110,9 @@ class IssueSummaryTable extends React.Component { // eslint-disable-line react/p
                 {issue.watched_by_current_user ? 'Stop watching' : 'Watch this issue'}
               </a>
             }
-          </div>
-        </div>
-      </div>
+          </td>
+        </tr>
+      </table>
     );
   }
 }
