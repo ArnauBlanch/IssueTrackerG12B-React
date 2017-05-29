@@ -47,7 +47,7 @@ class IssueDetailsMain extends React.Component { // eslint-disable-line react/pr
                 key={f.name}
                 style={{ marginTop: 10 }}
                 backgroundColor={blue}
-                onRequestDelete={() => console.log('delete!')}
+                onRequestDelete={() => this.props.handleDeleteAttachedFile(f._links.self.href, issue.id)}
               >
                 <a href={f._links.url} target="_blank"><b>{f.name}</b></a>
               </Chip>
@@ -62,6 +62,7 @@ class IssueDetailsMain extends React.Component { // eslint-disable-line react/pr
 
 IssueDetailsMain.propTypes = {
   issue: PropTypes.object.isRequired,
+  handleDeleteAttachedFile: PropTypes.func.isRequired,
 };
 
 export default IssueDetailsMain;

@@ -1,6 +1,6 @@
 import { take, call, put, fork } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
-import { GET_ISSUE_REQUEST, VOTE_ISSUE, WATCH_ISSUE, DELETE_ISSUE } from './constants';
+import { GET_ISSUE_REQUEST, VOTE_ISSUE, WATCH_ISSUE, DELETE_ISSUE, DELETE_ATTACHED_FILE } from './constants';
 import { getIssueRequest, getIssueSuccess, getIssueFailure, currentlySending } from './actions';
 import request from '../../utils/request';
 
@@ -57,11 +57,25 @@ export function* deleteIssue() {
   }
 }
 
+export function* deleteAttachedFile() {
+  while(true) { // eslint-disable-line
+    const { url, id } = yield take(DELETE_ATTACHED_FILE);
+    console.log(id);
+    const response = yield call(request, url, 'DELETE', undefined, true);
+    if (response.status === 200) {
+      yield put(getIssueRequest(id));
+    } else if (response.status === 404) {
+      yield put(push('/issue-not-found'));
+    }
+  }
+}
+
 export function* issueDetailsSaga() {
   yield fork(getIssue);
   yield fork(voteIssue);
   yield fork(watchIssue);
   yield fork(deleteIssue);
+  yield fork(deleteAttachedFile);
 }
 
 export default [
