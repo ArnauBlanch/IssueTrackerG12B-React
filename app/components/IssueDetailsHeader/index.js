@@ -152,7 +152,7 @@ IssueDetailsHeader.propTypes = {
   clearError: PropTypes.func.isRequired,
   handleStatusChange: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default IssueDetailsHeader;

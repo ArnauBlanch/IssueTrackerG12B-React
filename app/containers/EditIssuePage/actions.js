@@ -21,8 +21,8 @@ export function getUsersSuccess(users) {
   return { type: GET_USERS_SUCCESS, users };
 }
 
-export function editIssueRequest(id, newValues) {
-  return { type: EDIT_ISSUE_REQUEST, id, newValues };
+export function editIssueRequest(id, newValues, isEditing) {
+  return { type: EDIT_ISSUE_REQUEST, id, newValues, isEditing };
 }
 
 export function editIssueSuccess() {
