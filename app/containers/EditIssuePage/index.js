@@ -87,7 +87,7 @@ export class EditIssuePage extends React.Component { // eslint-disable-line reac
       if (this.state.attachments.length > 0) {
         editedValues.attached_files = this.state.attachments;
       }
-      this.props.dispatch(editIssueRequest(this.props.params.issueID, editedValues));
+      this.props.dispatch(editIssueRequest(this.props.params.issueID, editedValues, true));
     }
   }
 

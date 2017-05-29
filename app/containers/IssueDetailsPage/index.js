@@ -46,7 +46,7 @@ export class IssueDetailsPage extends React.Component { // eslint-disable-line r
     if (comment) {
       values.comment = comment;
     }
-    this.props.dispatch(editIssueRequest(this.props.params.issueID, values));
+    this.props.dispatch(editIssueRequest(this.props.params.issueID, values, false));
   }
 
   render() {

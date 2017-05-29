@@ -20,17 +20,15 @@ export function* editIssue() {
   while (true) { // eslint-disable-line
     const editRequest = yield take(EDIT_ISSUE_REQUEST);
     const issueID = editRequest.id;
-    const { newValues } = editRequest;
+    const { newValues, isEditing } = editRequest;
     try {
       const response = yield call(request, `/issues/${issueID}`, 'PATCH', newValues, true);
       if (response.status === 200) {
         yield put(editIssueSuccess());
-        if (Object.keys(newValues).length < 3 &&
-        (Object.keys(newValues).indexOf('status') !== -1 ||
-        Object.keys(newValues).indexOf('attached_files') !== -1)) {
-          yield put(getIssueRequest(issueID));
-        } else {
+        if (isEditing) {
           yield put(push(`/issues/${issueID}`));
+        } else {
+          yield put(getIssueRequest(issueID));
         }
       } else {
         const responseBody = yield response.json();
