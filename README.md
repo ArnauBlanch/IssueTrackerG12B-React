@@ -5,5 +5,3 @@
 
  * Blanch Cortès, Arnau
  * De Mingo Guerrero, Iván
- * Arribas Pardo, Fèlix
- * Martínez Martínez, Guillermo
